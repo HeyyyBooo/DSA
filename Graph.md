@@ -13,44 +13,44 @@ Report of Target 2025
 
 	Direct level wise BFS implementation.  
 ```python
-def orangesRotting(self, grid: List\[List\[int\]\]) \-\> int:  
+def orangesRotting(self, grid: List[List[int]]) -> int:  
         m=len(grid)  
-        n=len(grid\[0\])  
+        n=len(grid[0])  
         def valid(i,j):  
-            if i\<0 or i\>=m :  
+            if i<0 or i>=m :  
                 return False  
-            if j\<0 or j\>=n :  
+            if j<0 or j>=n :  
                 return False  
             return True  
         q=deque()  
         for i  in range(m):  
             for j in range(n):  
-                if(grid\[i\]\[j\]==2):  
+                if(grid[i][j]==2):  
                     q.append((i,j,0))  
         ans=0  
         while q:  
             i,j,t=q.popleft()  
             ans=max(ans,t)  
             if valid(i+1,j):  
-                if grid\[i+1\]\[j\]==1:  
-                    grid\[i+1\]\[j\]=2  
+                if grid[i+1][j]==1:  
+                    grid[i+1][j]=2  
                     q.append((i+1,j,t+1))  
             if valid(i,j+1):  
-                if grid\[i\]\[j+1\]==1:  
-                    grid\[i\]\[j+1\]=2  
+                if grid[i][j+1]==1:  
+                    grid[i][j+1]=2  
                     q.append((i,j+1,t+1))  
             if valid(i-1,j):  
-                if grid\[i-1\]\[j\]==1:  
-                    grid\[i-1\]\[j\]=2  
+                if grid[i-1][j]==1:  
+                    grid[i-1][j]=2  
                     q.append((i-1,j,t+1))  
             if valid(i,j-1):  
-                if grid\[i\]\[j-1\]==1:  
-                    grid\[i\]\[j-1\]=2  
+                if grid[i][j-1]==1:  
+                    grid[i][j-1]=2  
                     q.append((i,j-1,t+1))  
         for i in range(m):  
             for j in range(n):  
-                if grid\[i\]\[j\]==1 :  
-                    return \-1  
+                if grid[i][j]==1 :  
+                    return -1  
         return ans  
 ```
 If direction is valid in the grid then append it into the queue with incremented time.  
@@ -61,13 +61,13 @@ Time complexity is O(mn).
    An **island** is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water  
    Direct implementation of multiple dfs count.
    ```python  
-   def numIslands(self, grid: List\[List\[str\]\]) \-\> int:  
+   def numIslands(self, grid: List[List[str]]) -> int:  
            m=len(grid)  
-           n=len(grid\[0\])  
+           n=len(grid[0])  
            def valid(i,j):  
-               if i\<0 or i\>=m :  
+               if i<0 or i>=m :  
                    return False  
-               if j\<0 or j\>=n :  
+               if j<0 or j>=n :  
                    return False  
                return True  
            vis=set()  
@@ -75,7 +75,7 @@ Time complexity is O(mn).
            def dfs(i,j):  
                if valid(i,j):  
                    if (i,j) not in vis:  
-                       if grid\[i\]\[j\]=="1":        
+                       if grid[i][j]=="1":        
                            vis.add((i,j))  
                            dfs(i+1,j)  
                            dfs(i-1,j)  
@@ -84,7 +84,7 @@ Time complexity is O(mn).
            ans=0  
            for i in range(m):  
                for j in range(n):  
-                   if grid\[i\]\[j\]=="1":  
+                   if grid[i][j]=="1":  
                        if (i,j) not in vis:  
                            dfs(i,j)  
                            ans+=1  
@@ -99,48 +99,48 @@ Time complexity is O(mn).
      
    Reverse Bfs from outside of the grid. I am making a graph matrix with extending the grid boundary as \-1. From all \-1 I am running the bfs until queue ends and we get only the remaining 1s which cant be covered by the border.  
     ```python
-   def numEnclaves(self, grid: List\[List\[int\]\]) \-\> int:  
+   def numEnclaves(self, grid: List[List[int]]) -> int:  
            m=len(grid)  
-           n=len(grid\[0\])  
-           graph \= \[\[-1 for \_ in range(n+2)\] for \_ in range(m+2)\]  
+           n=len(grid[0])  
+           graph = [[-1 for _ in range(n+2)] for _ in range(m+2)]  
            for i in range(m):  
                for j in range(n):  
-                   graph\[i+1\]\[j+1\]=grid\[i\]\[j\]  
+                   graph[i+1][j+1]=grid[i][j]  
            m+=2  
            n+=2  
            def valid(i,j):  
-               if i\<0 or i\>=m :  
+               if i<0 or i>=m :  
                    return False  
-               if j\<0 or j\>=n :  
+               if j<0 or j>=n :  
                    return False  
                return True  
            q=deque()  
            for i  in range(m):  
                for j in range(n):  
-                   if(graph\[i\]\[j\]==-1):  
+                   if(graph[i][j]==-1):  
                        q.append((i,j))  
            while q:  
                i,j=q.popleft()  
                if valid(i+1,j):  
-                   if graph\[i+1\]\[j\]==1:  
-                       graph\[i+1\]\[j\]=-1  
+                   if graph[i+1][j]==1:  
+                       graph[i+1][j]=-1  
                        q.append((i+1,j))  
                if valid(i,j+1):  
-                   if graph\[i\]\[j+1\]==1:  
-                       graph\[i\]\[j+1\]=-1  
+                   if graph[i][j+1]==1:  
+                       graph[i][j+1]=-1  
                        q.append((i,j+1))  
                if valid(i-1,j):  
-                   if graph\[i-1\]\[j\]==1:  
-                       graph\[i-1\]\[j\]=-1  
+                   if graph[i-1][j]==1:  
+                       graph[i-1][j]=-1  
                        q.append((i-1,j))  
                if valid(i,j-1):  
-                   if graph\[i\]\[j-1\]==1:  
-                       graph\[i\]\[j-1\]=-1  
+                   if graph[i][j-1]==1:  
+                       graph[i][j-1]=-1  
                        q.append((i,j-1))  
            ans=0  
            for i  in range(m):  
                for j in range(n):  
-                   if(graph\[i\]\[j\]==1):  
+                   if(graph[i][j]==1):  
                        ans+=1  
            return ans  
     ```
@@ -156,22 +156,22 @@ Time complexity is O(mn).
    Return the **modified** image after performing the flood fill.  
    Direct implementation of colour based DFS.  
    ```python
-    def floodFill(self, image: List\[List\[int\]\], sr: int, sc: int, color: int) \-\> List\[List\[int\]\]:  
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:  
            m=len(image)  
-           n=len(image\[0\])  
+           n=len(image[0])  
            def valid(i,j):  
-               if i\<0 or i\>=m :  
+               if i<0 or i>=m :  
                    return False  
-               if j\<0 or j\>=n :  
+               if j<0 or j>=n :  
                    return False  
                return True  
            vis=set()  
-           main\_clr=image\[sr\]\[sc\]  
+           main_clr=image[sr][sc]  
            def dfs(i,j):  
                if valid(i,j):  
                    if (i,j) not in vis:  
-                       if image\[i\]\[j\]==main\_clr:  
-                           image\[i\]\[j\]=color  
+                       if image[i][j]==main_clr:  
+                           image[i][j]=color  
                            vis.add((i,j))  
                            dfs(i+1,j)  
                            dfs(i,j+1)  
@@ -188,61 +188,61 @@ Time complexity is O(mn).
   Return *the ordering of courses you should take to finish all courses*. If there are many valid answers, return **any** of them. If it is impossible to finish all courses, return **an empty array**.  
   Direct implementation of topological sort using Kahn's Algorithm.  
     ```python
-  def findOrder(self, numCourses: int, prerequisites: List\[List\[int\]\]) \-\> List\[int\]:  
-          adj=\[\[\] for \_ in range(numCourses)\]  
+  def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:  
+          adj=[[] for _ in range(numCourses)]  
           for edge in prerequisites:  
-              adj\[edge\[0\]\].append(edge\[1\])  
-          indegree=\[0 for \_ in range(numCourses)\]  
+              adj[edge[0]].append(edge[1])  
+          indegree=[0 for _ in range(numCourses)]  
           for u in range(numCourses):  
-              for v in adj\[u\]:  
-                  indegree\[v\]+=1  
+              for v in adj[u]:  
+                  indegree[v]+=1  
           q=deque()  
           for node,degree in enumerate(indegree):  
               if degree==0:  
                   q.append(node)  
-          topo=\[\]  
+          topo=[]  
           while q:  
               node=q.popleft()  
               topo.append(node)  
-              for v in adj\[node\]:  
-                  indegree\[v\]-=1  
-                  if indegree\[v\]==0 :  
+              for v in adj[node]:  
+                  indegree[v]-=1  
+                  if indegree[v]==0 :  
                       q.append(v)  
           topo.reverse()  
-          return topo if len(topo)==numCourses else \[\] 
+          return topo if len(topo)==numCourses else [] 
     ``` 
   The time complexity is O(numCourses \+ len(Prerequisites)).  
     
   Another approach using Stack and DFS where I am checking cycle using tricoloured flag 0 means not visited , 1 means visiting and 2 visited successfully. And in between if there is 1 then it means there is cycle as  I again reached 1 withing completing that node in dfs.  
     
     ```python
-  def findOrder(self, numCourses: int, prerequisites: List\[List\[int\]\]) \-\> List\[int\]:  
-          adj=\[\[\] for \_ in range(numCourses)\]  
+  def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:  
+          adj=[[] for _ in range(numCourses)]  
           for edge in prerequisites:  
-              adj\[edge\[0\]\].append(edge\[1\])  
+              adj[edge[0]].append(edge[1])  
     
-          vis=\[0\]\*numCourses  
+          vis=[0]*numCourses  
           stk=deque()  
           cycle=False  
     
           def dfs(node):  
               nonlocal cycle  
-              if vis\[node\]==1:  
+              if vis[node]==1:  
                   cycle=True  
                   return  
-              if vis\[node\]==2:  
+              if vis[node]==2:  
                   return  
-              vis\[node\]=1  
-              for v in adj\[node\]:  
+              vis[node]=1  
+              for v in adj[node]:  
                   dfs(v)  
-              vis\[node\]=2  
+              vis[node]=2  
               stk.append(node)  
     
           for node in range(numCourses):  
-              if vis\[node\]==0:  
+              if vis[node]==0:  
                   dfs(node)  
           topo=list(stk)  
-          return topo if not cycle else \[\]  
+          return topo if not cycle else []  
     ```
     
   With again Time complexity of O(numCourses \+ len(Prerequisites))  
@@ -255,15 +255,15 @@ Time complexity is O(mn).
 Same Implementation as linked list deep copy using hashmap and visited set by the help of recursion.
 ```python
 """  
-\# Definition for a Node.  
+# Definition for a Node.  
 class Node:  
-    def \_\_init\_\_(self, val \= 0, neighbors \= None):  
-        self.val \= val  
-        self.neighbors \= neighbors if neighbors is not None else \[\]  
+    def __init__(self, val = 0, neighbors = None):  
+        self.val = val  
+        self.neighbors = neighbors if neighbors is not None else []  
 """
 
 class Solution:  
-    def cloneGraph(self, source: Optional\['Node'\]) \-\> Optional\['Node'\]:  
+    def cloneGraph(self, source: Optional['Node']) -> Optional['Node']:  
         if not source:  
             return None  
         mp=defaultdict(Node)  
@@ -271,17 +271,17 @@ class Solution:
         def rec(node):  
             vis.add(node)  
             temp=Node(node.val)  
-            mp\[node\]=temp  
+            mp[node]=temp  
             for neigh  in node.neighbors:  
                 if neigh not in vis:  
                     rec(neigh)  
         rec(source)  
         for node in mp.keys():  
-            n=\[\]  
+            n=[]  
             for neigh in node.neighbors:  
-                n.append(mp\[neigh\])  
-            mp\[node\].neighbors=n  
-        return mp\[source\]  
+                n.append(mp[neigh])  
+            mp[node].neighbors=n  
+        return mp[source]  
 ```
 With Time complexity of O(N+E) and space complexity of O(N).
 
@@ -292,24 +292,24 @@ With Time complexity of O(N+E) and space complexity of O(N).
    Return true *if and only if it is **bipartite***  
    So it's a color matching problem for each  node. If it has the same color as parent then it's false we will color the node with opposite color  of parent using DFS.  
     ```python
-   def isBipartite(self, graph: List\[List\[int\]\]) \-\> bool:  
+   def isBipartite(self, graph: List[List[int]]) -> bool:  
            n=len(graph)  
-           color=\[-1\]\*n  
+           color=[-1]*n  
            def dfs(node,parent):  
-               if color\[parent\]==-1:  
-                   color\[node\]=1  
+               if color[parent]==-1:  
+                   color[node]=1  
                else:  
-                   color\[node\]=not color\[parent\]  
-               for v in graph\[node\]:  
-                   if color\[v\]==-1:  
+                   color[node]=not color[parent]  
+               for v in graph[node]:  
+                   if color[v]==-1:  
                        ans=dfs(v,node)  
                        if not ans:  
                            return False  
-                   elif color\[v\]==color\[node\]:  
+                   elif color[v]==color[node]:  
                        return False  
                return True  
            for i in range(n):  
-               if color\[i\]==-1:  
+               if color[i]==-1:  
                    temp=dfs(i,-1)  
                    if not temp:  
                        return temp  
@@ -332,37 +332,37 @@ The time complexity is O(V+E) and O(V) for color array.
    from collections import deque  
    class Solution:  
        def findOrder(words):  
-           adj=\[\[\] for \_ in range(26)\]  
-           indegree \= \[0 for \_ in range(26)\]  
-           avail=\[False for \_ in range(26)\]  
+           adj=[[] for _ in range(26)]  
+           indegree = [0 for _ in range(26)]  
+           avail=[False for _ in range(26)]  
            for word in words:  
                for c in word:  
-                   avail\[ord(c)-97\]=True  
+                   avail[ord(c)-97]=True  
            for i in range(1,len(words)):  
                j=0  
-               minlen=min(len(words\[i-1\]),len(words\[i\]))  
-               while(j\<minlen and words\[i-1\]\[j\]==words\[i\]\[j\]):  
+               minlen=min(len(words[i-1]),len(words[i]))  
+               while(j<minlen and words[i-1][j]==words[i][j]):  
                    j+=1  
-               if j\<minlen:  
-                   adj\[ord(words\[i-1\]\[j\])-97\].append(ord(words\[i\]\[j\])-97)  
-                   indegree\[ord(words\[i\]\[j\])-97\]+=1  
-               elif len(words\[i-1\])\>len(words\[i\]):  
+               if j<minlen:  
+                   adj[ord(words[i-1][j])-97].append(ord(words[i][j])-97)  
+                   indegree[ord(words[i][j])-97]+=1  
+               elif len(words[i-1])>len(words[i]):  
                    return ''  
            n=sum(avail)  
            q=deque()  
            for i in range(len(indegree)):  
-               if avail\[i\]:  
-                   if indegree\[i\]==0:  
+               if avail[i]:  
+                   if indegree[i]==0:  
                        q.append(i)  
-           topo=\[\]  
+           topo=[]  
            while q:  
                node=q.popleft()  
                topo.append(node)  
-               for v in adj\[node\]:  
-                   indegree\[v\]-=1  
-                   if indegree\[v\]==0:  
+               for v in adj[node]:  
+                   indegree[v]-=1  
+                   if indegree[v]==0:  
                        q.append(v)  
-        return ''.join(\[chr(c \+ 97) for c in topo\]) if len(topo) \== n else ""  
+        return ''.join([chr(c + 97) for c in topo]) if len(topo) == n else ""  
     ```
    Now the edge case is if the order given words is wrong, that is len(words\[i-1\])\>len(words\[i\]) then it will be an empty string and if the topo list is not the same as n then again empty string is the answer.  
      
@@ -382,29 +382,29 @@ The time complexity is O(V+E) and O(V) for color array.
 
 
 ```python
-  def ladderLength(self, beginWord: str, endWord: str, wordList: List\[str\]) \-\> int:  
-          words \= set(wordList)  
+  def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:  
+          words = set(wordList)  
           if endWord not in words:  
               return 0  
     
-          q \= deque()  
+          q = deque()  
           q.append(beginWord)  
-          vis \= set()  
+          vis = set()  
           vis.add(beginWord)  
     
-          changes \= 1  
+          changes = 1  
           while q:  
-              for \_ in range(len(q)):  
-                  word \= q.popleft()  
-                  if word \== endWord:  
+              for _ in range(len(q)):  
+                  word = q.popleft()  
+                  if word == endWord:  
                       return changes  
                   for i in range(len(word)):  
                       for c in 'abcdefghijklmnopqrstuvwxyz':  
-                          newWord \= word\[:i\] \+ c \+ word\[i+1:\]  
+                          newWord = word[:i] + c + word[i+1:]  
                           if newWord in words and newWord not in vis:  
                               vis.add(newWord)  
                               q.append(newWord)  
-              changes \+= 1  
+              changes += 1  
           return 0  
 ```
   The worst case time complexity is O(len(wordList)\*len(word)2)  
@@ -422,11 +422,11 @@ The time complexity is O(V+E) and O(V) for color array.
     words=set(wordList)
 
           if endWord not in words:  
-              return \[\] 
+              return [] 
 ```
   Made the set of words and handled the edge case.
 ```python
-    graph \= defaultdict(list)
+    graph = defaultdict(list)
 
           level={beginWord}  
           vis=set()  
@@ -435,8 +435,8 @@ The time complexity is O(V+E) and O(V) for color array.
   Initialized all the variables required to build the graph.
   ```python  
   while level and not found:  
-              next\_level=set()  
-              vis |= level \# Mark all current level nodes as visited 
+              next_level=set()  
+              vis |= level # Mark all current level nodes as visited 
 ``` 
   For every word at this level:  
 * Generate **one-letter different words.**  
@@ -445,29 +445,29 @@ The time complexity is O(V+E) and O(V) for color array.
               for word in level:  
                   for i in range(len(word)):  
                       for c in "abcdefghijklmnopqrstuvwxyz":  
-                          newWord=word\[:i\]+c+word\[i+1:\]  
+                          newWord=word[:i]+c+word[i+1:]  
                           if newWord in words and newWord not in vis:  
-                              graph\[word\].append(newWord)  
+                              graph[word].append(newWord)  
                               if newWord==endWord:  
                                   found=True  
-                              next\_level.add(newWord)  
-              level=next\_level  
+                              next_level.add(newWord)  
+              level=next_level  
         ```
   Graph building phase using BFS.  
   Example Graph:
   ```python  
-  graph \= { "hit": \["hot"\], "hot": \["dot", "lot"\], "dot": \["dog"\], "lot": \["log"\], "dog": \["cog"\], "log": \["cog"\]}
+  graph = { "hit": ["hot"], "hot": ["dot", "lot"], "dot": ["dog"], "lot": ["log"], "dog": ["cog"], "log": ["cog"]}
 
-    ans=\[\]
+    ans=[]
 
           def dfs(path,word):  
               if word==endWord:  
-                  ans.append(path\[:\])  
-              for v in graph\[word\]:  
+                  ans.append(path[:])  
+              for v in graph[word]:  
                   path.append(v)  
                   dfs(path,v)  
                   path.pop()  
-          dfs(\[beginWord\],beginWord)  
+          dfs([beginWord],beginWord)  
           return ans  
     ```
   Now DFS backtracks to create the path.  
@@ -478,23 +478,23 @@ The time complexity is O(V+E) and O(V) for color array.
   from queue import PriorityQueue  
   class Solution:  
       def dijkstra(self, V, edges, src):  
-          adj=\[\[\]for \_ in range(V)\]  
+          adj=[[]for _ in range(V)]  
           for u,v,w in edges:  
-              adj\[u\].append((v,w))  
-              adj\[v\].append((u,w))  
+              adj[u].append((v,w))  
+              adj[v].append((u,w))  
           pq=PriorityQueue()  
-          dist=\[float('inf') for \_ in range(V)\]  
-          dist\[src\]=0  
+          dist=[float('inf') for _ in range(V)]  
+          dist[src]=0  
           pq.put((0,src))  
           while not pq.empty():  
               dis,node=pq.get()  
-              for v,w in adj\[node\]:  
-                  if dis+w\<dist\[v\]:  
-                      dist\[v\]=dis+w  
-                      pq.put((dist\[v\],v))  
+              for v,w in adj[node]:  
+                  if dis+w<dist[v]:  
+                      dist[v]=dis+w  
+                      pq.put((dist[v],v))  
           for i in range(V):  
-              if dist\[i\]==float('inf'):  
-                  dist\[i\]=-1  
+              if dist[i]==float('inf'):  
+                  dist[i]=-1  
           return dist  
     ```
                
@@ -505,23 +505,23 @@ The time complexity is O(V+E) and O(V) for color array.
       
     It is level wise BFS using weighted distance relaxation using pruning of branches where we cant reach using less that equals to k stops.  
     ```python
-    def findCheapestPrice(self, n: int, flights: List\[List\[int\]\], src: int, dst: int, k: int) \-\> int:  
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:  
             q=deque()  
-            dist=\[float('inf') for \_ in range(n)\]  
-            adj=\[\[\] for \_ in range(n)\]  
+            dist=[float('inf') for _ in range(n)]  
+            adj=[[] for _ in range(n)]  
             for edge in flights:  
-                adj\[edge\[0\]\].append((edge\[1\],edge\[2\]))  
-            dist\[src\]=0  
+                adj[edge[0]].append((edge[1],edge[2]))  
+            dist[src]=0  
             q.append((0,src,0))  
             while q:  
                 stops,node,dis=q.popleft()  
-                if stops\>k:  
+                if stops>k:  
                     continue  
-                for v,w in adj\[node\]:  
-                    if dis+w\<dist\[v\] and stops\<=k :  
-                        dist\[v\]=dis+w  
-                        q.append((stops+1,v,dist\[v\]))  
-            return \-1 if dist\[dst\]==float('inf') else dist\[dst\]  
+                for v,w in adj[node]:  
+                    if dis+w<dist[v] and stops<=k :  
+                        dist[v]=dis+w  
+                        q.append((stops+1,v,dist[v]))  
+            return -1 if dist[dst]==float('inf') else dist[dst]  
     ```
     This gives us the desired output that is weight relaxation like dijkstra but not  priority wise queuing.  
       
@@ -530,15 +530,15 @@ The time complexity is O(V+E) and O(V) for color array.
     We will send a signal from a given node k. Return *the **minimum** time it takes for all the* n *nodes to receive the signal*. If it is impossible for all the n nodes to receive the signal, return \-1  
     Direct implementation of **Bellman Ford**  Algorithm .  
     ```python
-    def networkDelayTime(self, times: List\[List\[int\]\], n: int, k: int) \-\> int:  
-            dist=\[float('inf') for \_ in range(n)\]  
-            dist\[k-1\]=0  
-            for \_ in range(n):  
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:  
+            dist=[float('inf') for _ in range(n)]  
+            dist[k-1]=0  
+            for _ in range(n):  
                 for u,v,w in times:  
-                    if dist\[u-1\]+w\<dist\[v-1\]:  
-                        dist\[v-1\]=dist\[u-1\]+w  
+                    if dist[u-1]+w<dist[v-1]:  
+                        dist[v-1]=dist[u-1]+w  
             if float('inf') in dist:  
-                return \-1  
+                return -1  
             return max(dist)
     ```  
 13. **Number of Ways to Arrive at Destination**   
@@ -550,108 +550,108 @@ The time complexity is O(V+E) and O(V) for color array.
     Implementation of Flyodd Warshal’s Dynamic Programming approach using additional argument of number of paths.  
     Initialize a 3D DP table dp\[n\]\[n\]\[2\] where: dp\[src\]\[dest\]\[0\] stores the minimum time to reach dest from src. dp\[src\]\[dst\]\[1\] stores the number of ways to achieve the minimum time.  
       ```python
-     def countPaths(self, n: int, roads: List\[List\[int\]\]) \-\> int:  
-            dp=\[\[\[0 for \_ in range(2)\] for \_\_ in range(n)\] for \_\_\_ in range(n)\]  
-            \#dp\[src\]\[dst\]\[time\] and dp\[src\]\[dst\]\[ways\]  
+     def countPaths(self, n: int, roads: List[List[int]]) -> int:  
+            dp=[[[0 for _ in range(2)] for __ in range(n)] for ___ in range(n)]  
+            #dp[src][dst][time] and dp[src][dst][ways]  
       
             for src in range(n):  
                 for dst in range(n):  
-                    if src\!=dst :  
-                        dp\[src\]\[dst\]\[0\]=int(1e12) \#time  
-                        dp\[src\]\[dst\]\[1\]=0 \#ways  
+                    if src!=dst :  
+                        dp[src][dst][0]=int(1e12) #time  
+                        dp[src][dst][1]=0 #ways  
                     else:  
-                        dp\[src\]\[src\]\[0\]=0 \#already there 0 time  
-                        dp\[src\]\[src\]\[1\]=1 \#trivial 1 way stay there  
+                        dp[src][src][0]=0 #already there 0 time  
+                        dp[src][src][1]=1 #trivial 1 way stay there  
             for u,v,t in roads:  
-                dp\[u\]\[v\]\[0\]=t  
-                dp\[v\]\[u\]\[0\]=t  
-                \#time is given and way is 1  
-                dp\[u\]\[v\]\[1\]=1  
-                dp\[v\]\[u\]\[1\]=1  
+                dp[u][v][0]=t  
+                dp[v][u][0]=t  
+                #time is given and way is 1  
+                dp[u][v][1]=1  
+                dp[v][u][1]=1  
             for via in range(n):  
                 for src in range(n):  
                     for dst in range(n):  
-                        if src\!=via and dst\!=via:  
-                            newTime=dp\[src\]\[via\]\[0\]+dp\[via\]\[dst\]\[0\]  
-                            if newTime\<dp\[src\]\[dst\]\[0\]:  
-                                dp\[src\]\[dst\]\[0\]=newTime  
-                                \#newPath shortest path Found  
-                                \#discard old and replace with via paths comnbinations  
-                                dp\[src\]\[dst\]\[1\]=(dp\[src\]\[via\]\[1\]\*dp\[via\]\[dst\]\[1\])%MOD  
-                            elif newTime==dp\[src\]\[dst\]\[0\]:  
-                                \#another path found with same time  
-                                \#add new via path Combinations to old paths  
-                                dp\[src\]\[dst\]\[1\]=(dp\[src\]\[dst\]\[1\]+dp\[src\]\[via\]\[1\]\*dp\[via\]\[dst\]\[1\])%MOD  
-            return dp\[n-1\]\[0\]\[1\] 
+                        if src!=via and dst!=via:  
+                            newTime=dp[src][via][0]+dp[via][dst][0]  
+                            if newTime<dp[src][dst][0]:  
+                                dp[src][dst][0]=newTime  
+                                #newPath shortest path Found  
+                                #discard old and replace with via paths comnbinations  
+                                dp[src][dst][1]=(dp[src][via][1]*dp[via][dst][1])%MOD  
+                            elif newTime==dp[src][dst][0]:  
+                                #another path found with same time  
+                                #add new via path Combinations to old paths  
+                                dp[src][dst][1]=(dp[src][dst][1]+dp[src][via][1]*dp[via][dst][1])%MOD  
+            return dp[n-1][0][1] 
     ``` 
     Time complexity of this approach is O(n3)  
       
     The Second approach is using Dijkstra with dynamic programming to store number of paths.  
       ```python
-    def countPaths(self, n: int, roads: List\[List\[int\]\]) \-\> int:  
-            adj=\[\[\] for \_ in range(n)\]  
+    def countPaths(self, n: int, roads: List[List[int]]) -> int:  
+            adj=[[] for _ in range(n)]  
             for u,v,t in roads:  
-                adj\[u\].append((v,t))  
-                adj\[v\].append((u,t))  
-            dist=\[float('inf') for \_ in range(n)\]  
-            path=\[0 for \_ in range(n)\]  
-            dist\[0\]=0  
-            path\[0\]=1  
+                adj[u].append((v,t))  
+                adj[v].append((u,t))  
+            dist=[float('inf') for _ in range(n)]  
+            path=[0 for _ in range(n)]  
+            dist[0]=0  
+            path[0]=1  
             pq=PriorityQueue()  
             pq.put((0,0))  
             while not pq.empty():  
                 time,node=pq.get()  
-                for v,t in adj\[node\]:  
-                    if t+time\<dist\[v\]:  
-                        dist\[v\]=t+time  
-                        path\[v\]=path\[node\]  
-                        pq.put((dist\[v\],v))  
-                    elif t+time \== dist\[v\]:  
-                        path\[v\]=(path\[v\]+path\[node\])%MOD  
-            return path\[n-1\] 
+                for v,t in adj[node]:  
+                    if t+time<dist[v]:  
+                        dist[v]=t+time  
+                        path[v]=path[node]  
+                        pq.put((dist[v],v))  
+                    elif t+time == dist[v]:  
+                        path[v]=(path[v]+path[node])%MOD  
+            return path[n-1] 
     ``` 
     If time reduces then update path otherwise increment the path same as previous implementation. This approach is having time complexity of O((m+n)logn).  
     **\>\>Flyodd Warshal:**  
     ```python
-    	dist=\[\[10\*\*5 for \_ in range(n)\] for \_ in range(n)\]  
+    	dist=[[10**5 for _ in range(n)] for _ in range(n)]  
             for u,v,w in edges:  
-                dist\[u\]\[v\]=w  
-                dist\[v\]\[u\]=w  
+                dist[u][v]=w  
+                dist[v][u]=w  
             for node in range(n):  
-                dist\[node\]\[node\]=0  
+                dist[node][node]=0  
             for via in range(n):  
                 for src in range(n):  
                     for dst in range(n):  
-                        dist\[src\]\[dst\]=min(  
-                            dist\[src\]\[dst\],  
-                            dist\[src\]\[via\]+dist\[via\]\[dst\]  
+                        dist[src][dst]=min(  
+                            dist[src][dst],  
+                            dist[src][via]+dist[via][dst]  
                             )  
       ```
              
     **\>\> Disjoint Set Union**   
     ```python
     class DSU:  
-       def \_\_init\_\_(self,n):  
-           self.parent=\[i for i in range(n)\]  
-           self.rank=\[0 for \_ in range(n)\]  
-           self.size=\[1 for \_ in range(n)\]  
+       def __init__(self,n):  
+           self.parent=[i for i in range(n)]  
+           self.rank=[0 for _ in range(n)]  
+           self.size=[1 for _ in range(n)]  
       
        def find(self,node):  
-           if self.parent\[node\]\!=node:  
-               self.parent\[node\]=self.find(self.parent\[node\])  
-           return self.parent\[node\]  
+           if self.parent[node]!=node:  
+               self.parent[node]=self.find(self.parent[node])  
+           return self.parent[node]  
       
        def unionByRank(self,x,y):  
            px,py=self.find(x),self.find(y)  
            if px==py:  
                return False  
-           if self.rank\[px\]\<self.rank\[py\]:  
-               self.parent\[px\]=py  
-           elif self.rank\[px\]\>self.rank\[py\]:  
-               self.parent\[py\]=px  
+           if self.rank[px]<self.rank[py]:  
+               self.parent[px]=py  
+           elif self.rank[px]>self.rank[py]:  
+               self.parent[py]=px  
            else:  
-               self.parent\[py\]=px  
-               self.rank\[px\]+=1  
+               self.parent[py]=px  
+               self.rank[px]+=1  
            return True  
       
       
@@ -659,12 +659,12 @@ The time complexity is O(V+E) and O(V) for color array.
            px,py=self.find(x),self.find(y)  
            if px==py:  
                return False  
-           if self.size\[px\]\<self.size\[py\]:  
-               self.parent\[px\]=py  
-               self.size\[py\]+=self.size\[px\]  
+           if self.size[px]<self.size[py]:  
+               self.parent[px]=py  
+               self.size[py]+=self.size[px]  
            else:  
-               self.parent\[py\]=px  
-               self.size\[px\]+=self.size\[py\]  
+               self.parent[py]=px  
+               self.size[px]+=self.size[py]  
            return True  
     ```
 14. **Number of operations to make Network Connected**  
@@ -675,12 +675,12 @@ The time complexity is O(V+E) and O(V) for color array.
       
     This is direct implementation of DSU whenever we connect a new element in disjoint first time increment the count and answer is going to be minimum edges to connect minus the counts.  
       ```python
-    def makeConnected(self, n: int, connections: List\[List\[int\]\]) \-\> int:  
+    def makeConnected(self, n: int, connections: List[List[int]]) -> int:  
            dsu=DSU(n)  
            ans=0  
            have=0  
-           if len(connections)\<n-1:  
-               return \-1  
+           if len(connections)<n-1:  
+               return -1  
            for u,v in connections:  
                if dsu.unionByRank(u,v):  
                    ans+=1  
@@ -690,27 +690,27 @@ The time complexity is O(V+E) and O(V) for color array.
     You are given a n,m which means the row and column of the 2D matrix and an array of  size k denoting the number of operations. Matrix elements is 0 if there is water or 1 if there is land. Originally, the 2D matrix is all 0 which means there is no land in the matrix. The array has k operator(s) and each operator has two integer A\[i\]\[0\], A\[i\]\[1\] means that you can change the cell matrix\[A\[i\]\[0\]\]\[A\[i\]\[1\]\] from sea to island. Return how many island are there in the matrix after each operation.You need to return an array of size k.  
     Note : An island means group of 1s such that they share a common side.  
       ```python
-    def numOfIslands(self, rows: int, cols: int, operators: List\[List\[int\]\]) \-\> List\[int\]:  
+    def numOfIslands(self, rows: int, cols: int, operators: List[List[int]]) -> List[int]:  
            def dimRed(i, j):  
-               return i \* cols \+ j  
+               return i * cols + j  
       
-           dsu \= DSU(rows \* cols)  
-           visited \= \[\[0\] \* cols for \_ in range(rows)\]  
-           ans \= \[\]  
-           count \= 0  
+           dsu = DSU(rows * cols)  
+           visited = [[0] * cols for _ in range(rows)]  
+           ans = []  
+           count = 0  
            for i, j in operators:  
-               if visited\[i\]\[j\]:  
+               if visited[i][j]:  
                    ans.append(count)  
                    continue  
-               visited\[i\]\[j\] \= 1  
-               count \+= 1  
-               index \= dimRed(i, j)  
-               for dx, dy in \[(-1,0),(1,0),(0,-1),(0,1)\]:  
-                   ni, nj \= i \+ dx, j \+ dy  
-                   if 0 \<= ni \< rows and 0 \<= nj \< cols and visited\[ni\]\[nj\]:  
-                       neighbor\_index \= dimRed(ni, nj)  
-                       if dsu.union(index, neighbor\_index):  
-                           count \-= 1   
+               visited[i][j] = 1  
+               count += 1  
+               index = dimRed(i, j)  
+               for dx, dy in [(-1,0),(1,0),(0,-1),(0,1)]:  
+                   ni, nj = i + dx, j + dy  
+                   if 0 <= ni < rows and 0 <= nj < cols and visited[ni][nj]:  
+                       neighbor_index = dimRed(ni, nj)  
+                       if dsu.union(index, neighbor_index):  
+                           count -= 1   
                ans.append(count)  
            return ans  
     ```
@@ -731,30 +731,30 @@ The time complexity is O(V+E) and O(V) for color array.
 ```python 
         for i in range(n):  
             for j in range(n):  
-                if grid\[i\]\[j\] \== 1:  
+                if grid[i][j] == 1:  
                     for dx, dy in directions:  
-                        if isvalid(i+dx, j+dy) and grid\[i \+ dx\]\[j \+ dy\] \== 1:  
-                            dsu.union(RedDim(i, j), RedDim(i \+ dx, j \+ dy)) 
+                        if isvalid(i+dx, j+dy) and grid[i + dx][j + dy] == 1:  
+                            dsu.union(RedDim(i, j), RedDim(i + dx, j + dy)) 
 ``` 
 \# Step 2 : Maximizing the Large Islands using 0s  
 ```python
-        maxi \= 0  
+        maxi = 0  
         for i in range(n):  
             for j in range(n):  
-                if grid\[i\]\[j\] \== 0:  
-                    comps \= set()  
+                if grid[i][j] == 0:  
+                    comps = set()  
                     for dx, dy in directions:  
-                        if isvalid(i+dx,j+dy) and grid\[i \+ dx\]\[j \+ dy\] \== 1:  
-                            comps.add(dsu.find(RedDim(i \+ dx, j \+ dy)))  
-                    size \= 0  
+                        if isvalid(i+dx,j+dy) and grid[i + dx][j + dy] == 1:  
+                            comps.add(dsu.find(RedDim(i + dx, j + dy)))  
+                    size = 0  
                     for node in comps:  
-                        size \+= dsu.getSize(node)  
-                    maxi \= max(size \+ 1, maxi)
+                        size += dsu.getSize(node)  
+                    maxi = max(size + 1, maxi)
 ```
 \# Step 3 : Edge case of having max in initial comps only  
 ```python
-        for i in range(n \* n):  
-            maxi \= max(maxi, dsu.getSize(i))  
+        for i in range(n * n):  
+            maxi = max(maxi, dsu.getSize(i))  
         return maxi  
     
 	The time complexity is O(n2).
@@ -762,12 +762,12 @@ The time complexity is O(V+E) and O(V) for color array.
 17. **Most Stones Removed with Same Row or Column**  
     On a 2D plane, we place n stones at some integer coordinate points. Each coordinate point may have at most one stone.  
     A stone can be removed if it shares either **the same row or the same column** as another stone that has not been removed.  
-    Given an array stones of length n where stones\[i\] \= \[xi, yi\] represents the location of the ith stone, return *the largest possible number of stones that can be removed*.  
+    Given an array stones of length n where stones[i] = [xi, yi] represents the location of the ith stone, return *the largest possible number of stones that can be removed*.  
       
       
     I am Considering each row and column as nodes of a graph and connect if there is a stone like for (X,Y) connect nodeX with nodeY . Now Numbering of nodes is : for rows it's the same as row numbers but for columns we are serializing it in straight line and adding cols after the rows end.  
     And finally we have to calculate all the connected components then our desired answer is   
-    RemovableStones \= NumStones- ConnectedComps.  
+    RemovableStones = NumStones- ConnectedComps.  
     Algo:  
 1. Serialize each `(x, y)` into two DSU nodes: `x`, and `maxRow + y + 1`  
 2. Use DSU `union(x, y_serialized)` for each stone  
@@ -813,11 +813,11 @@ The time complexity is O(V+E) and O(V) for color array.
    from collections import deque  
    class Solution:  
        def kosaraju(self, adj):  
-           \#step 1: Do DFS and find first one that ends (sort of topo sort)  
+           #step 1: Do DFS and find first one that ends (sort of topo sort)  
            vis=set(),stk=deque()  
            def dfs(node):  
                vis.add(node)  
-               for nei in adj\[node\]:  
+               for nei in adj[node]:  
                    if nei not in vis:  
                        dfs(nei)  
                stk.append(node)  
@@ -825,29 +825,29 @@ The time complexity is O(V+E) and O(V) for color array.
            for node in range(V):  
                if node not in vis:  
                    dfs(node)  
-           \#Now we have nodes in stack,The topmost finished the last  
-           \#Now Inversing the edges and going to do new DFS  
-           adjI=\[\[\] for \_ in range(V)\]  
+           #Now we have nodes in stack,The topmost finished the last  
+           #Now Inversing the edges and going to do new DFS  
+           adjI=[[] for _ in range(V)]  
            for u in range(V):  
-               for v in adj\[u\]:  
-                   adjI\[v\].append(u)  
+               for v in adj[u]:  
+                   adjI[v].append(u)  
            ans=0,visI=set()  
            comps=set()  
            def dfsI(node,temp):  
                visI.add(node)  
                temp.append(node)  
-               for nei in adjI\[node\]:  
+               for nei in adjI[node]:  
                    if nei not in visI:  
                        dfsI(nei,temp)  
-           \#The dfs order is the same as the stack order  
+           #The dfs order is the same as the stack order  
            while stk:  
                node=stk.pop()  
                if node not in visI:  
-                   temp=\[\]  
+                   temp=[]  
                    dfsI(node,temp)  
                    ans+=1  
                    comps.add(tuple(temp))  
-           \#The number of time DFS is performed is our Answer  
+           #The number of time DFS is performed is our Answer  
            print(comps)  
            return ans  
 ```
@@ -861,30 +861,30 @@ Return all critical connections in the network in any order.
 
 Direct Implementation of Tarjan’s Algo on bridges.
 ```python  
-def criticalConnections(self, n: int, connections: List\[List\[int\]\]) \-\> List\[List\[int\]\]:  
-        adj=\[\[\] for \_ in range(n)\]  
+def criticalConnections(self, n: int, connections: List[List[int]]) -> List[List[int]]:  
+        adj=[[] for _ in range(n)]  
         for u,v in connections:  
-            adj\[u\].append(v)  
-            adj\[v\].append(u)  
+            adj[u].append(v)  
+            adj[v].append(u)  
         vis=set()  
-        tin=\[10\*\*6 for \_ in range(n)\]  
-        low=\[10\*\*6 for \_ in range(n)\]  
-        bridges=\[\]  
+        tin=[10**6 for _ in range(n)]  
+        low=[10**6 for _ in range(n)]  
+        bridges=[]  
         timer=1  
         def dfs(node,parent):  
             nonlocal timer  
             vis.add(node)  
-            tin\[node\],low\[node\]=timer,timer  
+            tin[node],low[node]=timer,timer  
             timer+=1  
-            for neigh in adj\[node\]:  
-                if neigh\!=parent:  
+            for neigh in adj[node]:  
+                if neigh!=parent:  
                     if neigh not in vis:  
                         dfs(neigh,node)  
-                        low\[node\]=min(low\[node\],low\[neigh\])  
-                        if low\[neigh\]\>tin\[node\]:  
-                            bridges.append(\[node,neigh\])  
+                        low[node]=min(low[node],low[neigh])  
+                        if low[neigh]>tin[node]:  
+                            bridges.append([node,neigh])  
                     else:  
-                        low\[node\]=min(low\[node\],low\[neigh\])  
+                        low[node]=min(low[node],low[neigh])  
         dfs(0,-1)  
         return bridges 
 ``` 
