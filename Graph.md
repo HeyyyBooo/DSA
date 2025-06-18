@@ -587,7 +587,7 @@ The time complexity is O(V+E) and O(V) for color array.
     Time complexity of this approach is O(n3)  
       
     The Second approach is using Dijkstra with dynamic programming to store number of paths.  
-      ```python
+```python
     def countPaths(self, n: int, roads: List[List[int]]) -> int:  
             adj=[[] for _ in range(n)]  
             for u,v,t in roads:  
@@ -609,10 +609,10 @@ The time complexity is O(V+E) and O(V) for color array.
                     elif t+time == dist[v]:  
                         path[v]=(path[v]+path[node])%MOD  
             return path[n-1] 
-    ``` 
+``` 
     If time reduces then update path otherwise increment the path same as previous implementation. This approach is having time complexity of O((m+n)logn).  
     **\>\>Flyodd Warshal:**  
-    ```python
+```python
     	dist=[[10**5 for _ in range(n)] for _ in range(n)]  
             for u,v,w in edges:  
                 dist[u][v]=w  
@@ -626,10 +626,10 @@ The time complexity is O(V+E) and O(V) for color array.
                             dist[src][dst],  
                             dist[src][via]+dist[via][dst]  
                             )  
-      ```
+```
              
     **\>\> Disjoint Set Union**   
-    ```python
+```python
     class DSU:  
        def __init__(self,n):  
            self.parent=[i for i in range(n)]  
@@ -666,7 +666,7 @@ The time complexity is O(V+E) and O(V) for color array.
                self.parent[py]=px  
                self.size[px]+=self.size[py]  
            return True  
-    ```
+```
 14. **Number of operations to make Network Connected**  
     There are n computers numbered from 0 to n \- 1 connected by ethernet cables connections forming a network where connections\[i\] \= \[ai, bi\] represents a connection between computers ai and bi. Any computer can reach any other computer directly or indirectly through the network.  
     You are given an initial computer network connections. You can extract certain cables between two directly connected computers, and place them between any pair of disconnected computers to make them directly connected.  
@@ -758,7 +758,7 @@ The time complexity is O(V+E) and O(V) for color array.
         return maxi  
     
 	The time complexity is O(n2).
-
+```
 17. **Most Stones Removed with Same Row or Column**  
     On a 2D plane, we place n stones at some integer coordinate points. Each coordinate point may have at most one stone.  
     A stone can be removed if it shares either **the same row or the same column** as another stone that has not been removed.  
