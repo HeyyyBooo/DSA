@@ -125,7 +125,8 @@ Report of Target 2025
            return ans  
 ```
      
-   The iterative solution using BFS queue is as follows  
+The iterative solution using BFS queue is as follows
+  
 ```python   
    from collections import deque  
    class Solution:  
@@ -231,7 +232,7 @@ Report of Target 2025
 
           return True  
 ```
-  And secondly we can directly do it using O(n) extra space by maintaining a prev variable for containing previous value which we will check during traversal.
+And secondly we can directly do it using O(n) extra space by maintaining a prev variable for containing previous value which we will check during traversal.
 ```python 
   def isValidBST(self, root: Optional[TreeNode]) -> bool:
 
@@ -256,7 +257,7 @@ Report of Target 2025
           return inorder(root)
 
 ```
-  And another approach will be using min max counters for all states in recursion.
+And another approach will be using min max counters for all states in recursion.
 
 ```python    
 def isValidBST(self, root: Optional[TreeNode]) -> bool:  
@@ -286,7 +287,7 @@ This is checking left and right limit for each state.
                 return None  
             return rec(nums,0,len(nums)-1) 
 ``` 
-    On solving this recurrence relation the time complexity is O(n)  
+On solving this recurrence relation the time complexity is O(n)  
       
 12. **Two Sum BST Version**  
     Given the root of a binary search tree and an integer k, return true *if there exist two elements in the BST such that their sum is equal to* k, *or* false *otherwise*.  
@@ -308,12 +309,12 @@ This is checking left and right limit for each state.
             rec(root,k)  
             return ans  
 ```
-    The hashmap implementation just using recursion here.  
+The hashmap implementation just using recursion here.  
       
 13. **Kth Smallest in BST**  
     Given the root of a binary search tree, and an integer k, return *the* kth *smallest value (**1-indexed**) of all the values of the nodes in the tree*.  
       
-    Again the same inorder traversal technique will be used here.   
+Again the same inorder traversal technique will be used here.   
       
 ```python 
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:  
@@ -332,8 +333,8 @@ This is checking left and right limit for each state.
             rec(root)  
             return ans 
 ``` 
-    Again the time complexity is same as of inorder traversal.  
-    And we are pruning when i value is greater than k.  
+Again the time complexity is same as of inorder traversal.  
+And we are pruning when i value is greater than k.  
       
 14. **Binary Search Tree Iterator**  
     Implement the BSTIterator class that represents an iterator over the [**in-order traversal**](https://en.wikipedia.org/wiki/Tree_traversal#In-order_\(LNR\)) of a binary search tree (BST):  
@@ -426,9 +427,9 @@ If a node has both left and right as given targets then that's our answer doing 
       
       
       
-    So we just do level order traversing using queue.  
-    And queue will contain pair of node and the index of that node.  
-    And the last and first one on  a level will be considered for width calculation.  
+So we just do level order traversing using queue.  
+And queue will contain pair of node and the index of that node.  
+And the last and first one on  a level will be considered for width calculation.  
 ```python  
     def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:  
             if not root:  
@@ -452,13 +453,14 @@ If a node has both left and right as given targets then that's our answer doing 
                 ans=max(ans,last-first+1)  
             return ans  
 ```
-The time complexity of this code is O(n).  
+The time complexity of this code is O(n). 
+
 18. **Count Complete Tree Nodes**  
     Given the root of a **complete** binary tree, return the number of the nodes in the tree.  
     According to [**Wikipedia**](http://en.wikipedia.org/wiki/Binary_tree#Types_of_binary_trees), every level, except possibly the last, is completely filled in a complete binary tree, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.  
     Design an algorithm that runs in less than O(n) time complexity  
       
-    So by using property of complete trees noNodes=2height-1 and for partial one we will call it recursively for both subtrees.
+So by using property of complete trees noNodes=2height-1 and for partial one we will call it recursively for both subtrees.
 ```python 
     def countNodes(self, root: Optional[TreeNode]) -> int:
 
