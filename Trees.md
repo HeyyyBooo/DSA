@@ -414,9 +414,9 @@ This is checking left and right limit for each state.
                     return root  
             return rec(root,p,q)  
 ``` 
-    Checking for targets otherwise returning a Null pointer.  
-    If found then return them.  
-    If a node has both left and right as given targets then that's our answer doing it in O(n).  
+Checking for targets otherwise returning a Null pointer.  
+If found then return them.  
+If a node has both left and right as given targets then that's our answer doing it in O(n).  
       
 17. **Max Width of Binary Tree**  
     Given the root of a binary tree, return *the **maximum width** of the given tree*.  
@@ -452,7 +452,7 @@ This is checking left and right limit for each state.
                 ans=max(ans,last-first+1)  
             return ans  
 ```
-    The time complexity of this code is O(n).  
+The time complexity of this code is O(n).  
 18. **Count Complete Tree Nodes**  
     Given the root of a **complete** binary tree, return the number of the nodes in the tree.  
     According to [**Wikipedia**](http://en.wikipedia.org/wiki/Binary_tree#Types_of_binary_trees), every level, except possibly the last, is completely filled in a complete binary tree, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.  
@@ -498,9 +498,9 @@ This is checking left and right limit for each state.
 
             return 1 + self.countNodes(root.left)+self.countNodes(root.right)
 ```
-    The right and left id calculating left and right depth/height of subtree.
+The right and left id calculating left and right depth/height of subtree.
 
-    The average time complexity of this code is Ө(logn)2.
+The average time complexity of this code is Ө(logn)2.
 
     
 
@@ -535,7 +535,7 @@ This is checking left and right limit for each state.
                     print(current.val)  # "Visit" the current node  
                     current = current.right  # Move to right child  
 ```
-    I will modify this , instead of printing compare with the prev number if there is a issue I will keep track of the potential two candidates. After traversal I will swap them.  
+I will modify this , instead of printing compare with the prev number if there is a issue I will keep track of the potential two candidates. After traversal I will swap them.  
 ```python 
     def recoverTree(self, root: Optional[TreeNode]) -> None:  
             first,second,prev,pred=None,None,None,None  
@@ -574,7 +574,7 @@ This is checking left and right limit for each state.
             if first and second:  
                 first.val,second.val=second.val,first.val  
 ```
-    After swapping the Binary tree is fully BST now.  
+After swapping the Binary tree is fully BST now.  
 
 20. **Construct Tree using inorder and Pre/Post Order**  
       
@@ -592,7 +592,7 @@ This is checking left and right limit for each state.
                     return root  
             return build(q,inorder)  
 ```
-    Using Postorder:  
+Using Postorder:  
 ```python 
     def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:  
             q=deque(postorder)  
@@ -693,7 +693,7 @@ I used sorted environment as asked in question. The Time complexity is
             dfs(target,k)  
             return ans
 ```  
-    This is done in O(n)  time and space.  
+This is done in O(n)  time and space.  
       
 24. **Populating Next Right Pointers**  
     Given a binary tree
@@ -707,9 +707,9 @@ I used sorted environment as asked in question. The Time complexity is
 ```
 
       
-    Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.  
-    Initially, all next pointers are set to NULL.  
-    So I am doing level order traversal and pointing next of element to the one that is next in queue by checking if they are in same level.  
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.  
+Initially, all next pointers are set to NULL.  
+So I am doing level order traversal and pointing next of element to the one that is next in queue by checking if they are in same level.  
       
 ```python   
     def connect(self, root: 'Node') -> 'Node':  
@@ -732,7 +732,7 @@ I used sorted environment as asked in question. The Time complexity is
 ```
     
 
-    **Follow-up:**  
+**Follow-up:**  
 * You may only use constant extra space.  
 * The recursive approach is fine. You may assume implicit stack space does not count as extra space for this problem.  
   As Recursion is fine I am doing that only.  
@@ -747,7 +747,7 @@ I used sorted environment as asked in question. The Time complexity is
                   root=root.next  
               return root  
 ```
-  We are passing parents next as argument, if there is any left in parents.next then thats our childs.next else if there is parents.next have right then thats our childs.next else we go next right.  
+We are passing parents next as argument, if there is any left in parents.next then thats our childs.next else if there is parents.next have right then thats our childs.next else we go next right.  
 ```python 
   def rec(node):  
               if not node:  
@@ -762,9 +762,9 @@ I used sorted environment as asked in question. The Time complexity is
               rec(node.right)  
               rec(node.left)  
 ```
-  Now coming to the recursion part we are coming from right to left and filling the immediate next using findNext function.   
-  For the right child the parents.next.left or available right child is the next and for the left child if there is a right available for parent then that is the next otherwise parents.next.child is the next.  
-  The Time complexity is O(n) with a recursive stack.  
+Now coming to the recursion part we are coming from right to left and filling the immediate next using findNext function.   
+For the right child the parents.next.left or available right child is the next and for the left child if there is a right available for parent then that is the next otherwise parents.next.child is the next.  
+The Time complexity is O(n) with a recursive stack.  
     
 25. **Binary Tree Maximum Path Sum**  
     A **path** in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence **at most once**. Note that the path does not need to pass through the root.  
@@ -789,7 +789,7 @@ I used sorted environment as asked in question. The Time complexity is
             get_max(root)  
             return max_path 
 ``` 
-    The time complexity upon solving the recurrence relation is O(n).  
+The time complexity upon solving the recurrence relation is O(n).  
       
 26. **Maximum Sum BST**  
       
@@ -820,7 +820,7 @@ I used sorted environment as asked in question. The Time complexity is
           rec(root)  
           return max(0, maxSum)
 ```  
-  We traverse each node exactly once so Time complexity is O(n).  
+We traverse each node exactly once so Time complexity is O(n).  
     
 27. **Serialize and Deserialize Binary Tree**  
     Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.  
@@ -851,7 +851,7 @@ I used sorted environment as asked in question. The Time complexity is
             print(s)  
             return s  
 ```
-    Now to deserialize I am first converting it into list of values and Nulls that is \# in our case and recursively building in the same order.  
+Now to deserialize I am first converting it into list of values and Nulls that is \# in our case and recursively building in the same order.  
 ```python 
     def deserialize(self, data):  
             """Decodes your encoded data to tree.  
@@ -896,7 +896,7 @@ I used sorted environment as asked in question. The Time complexity is
                 return node  
             return rec(tree) 
 ``` 
-    Now this is building the Tree again from the string.  
+Now this is building the Tree again from the string.  
     My String and my tree list.
   
     b1b2\#\#b3b4\#\#b5\#\#  
@@ -956,5 +956,5 @@ I used sorted environment as asked in question. The Time complexity is
            ans+=right(root)  
            return ans
 ```  
-   Done with worst case time complexity of O(n)   
+Done with worst case time complexity of O(n)   
    
