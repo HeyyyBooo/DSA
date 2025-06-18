@@ -10,7 +10,7 @@ Report of Target 2025
   As addition is commutative so we sort the nums first and fix ith index and search for all valid bounds of the range .  
   On Rearranging the constraints we get lower \- nums\[i\] \<= nums\[j\] \<= upper \- nums\[i\] so we find lower-nums\[i\] and upper-nums\[i\] positions in sorted array from i+1 to length of nums using binary search.  
     
-  ```python
+```python
 from bisect import bisect_left, bisect_right
 
 def countFairPairs(self, nums: List[int], lower: int, upper: int) -> int:
@@ -30,7 +30,7 @@ def countFairPairs(self, nums: List[int], lower: int, upper: int) -> int:
    Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.  
    If target is not found in the array, return \[-1, \-1\].  
    Direct Implementation of binary search.  
-   ```python
+```python
 from bisect import bisect_left
 
 def searchRange(self, nums: List[int], target: int) -> List[int]:
@@ -79,7 +79,7 @@ def peakIndexInMountainArray(self, arr: List[int]) -> int:
    We also have to keep track of the original index as its what we have to return.  
    Make a list of starts and indexes then sorting it then performing binary search of ending intervals.  
 
-      ```python
+```python
 from bisect import bisect_left
 
 def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
@@ -116,7 +116,7 @@ def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
      
      
       
-   ```python
+```python
 from bisect import bisect_left
 
 def search(self, nums: List[int], target: int) -> int:
@@ -159,7 +159,7 @@ def search(self, nums: List[int], target: int) -> int:
    So this is a problem on binary search for solutions. we will be finding the best solution  until our search space is ended.  
    First we initialize the low and high from search space.  
    Then for mid we calculate the solution then navigate towards the best desired solution.  
-   ```python
+```python
 from math import ceil
 
 def minEatingSpeed(self, piles: List[int], h: int) -> int:
@@ -196,7 +196,7 @@ def minEatingSpeed(self, piles: List[int], h: int) -> int:
    
 
    Same as above problem just different solution function.  
-   ```python
+```python
 from math import ceil
 
 def smallestDivisor(self, nums: List[int], threshold: int) -> int:
@@ -220,7 +220,7 @@ def smallestDivisor(self, nums: List[int], threshold: int) -> int:
 
 ---
    Or also 
-   ```python
+```python
    def getSum(d):  
                return sum(ceil(x/d) for x in nums)  
                ```
@@ -251,7 +251,7 @@ Now, sum the apples from layer 1 to `n`:
 Using sum of squared formula it simplifies to  
  12 \* (n(n+1)(2n+1))/6 \= 2n(n+1)(2n+1)
 
-	```python
+```python
 def minimumPerimeter(self, neededApples: int) -> int:
     low = 1
     high = 100000
@@ -281,7 +281,7 @@ The time complexity is O(logn)  where maximum n is 100000.
    
 
 	The Binary search approach of the above problem is as follows.  
-	```python
+```python
 from collections import defaultdict
 
 def characterReplacement(self, s: str, k: int) -> int:
@@ -340,7 +340,7 @@ The time complexity is O(nlogn) & O(n) respectively.
       
     I will store the minimum number present in the left of the current index and we will find our candidate that is greater than my current minimum but less than my current element present in right.  
     I will sort the right part and will do a binary search for bounds.  
-    ```python
+```python
 from bisect import bisect_left, insort
 from typing import List
 
