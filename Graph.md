@@ -584,9 +584,9 @@ The time complexity is O(V+E) and O(V) for color array.
                                 dp[src][dst][1]=(dp[src][dst][1]+dp[src][via][1]*dp[via][dst][1])%MOD  
             return dp[n-1][0][1] 
     ``` 
-    Time complexity of this approach is O(n3)  
+Time complexity of this approach is O(n3)  
       
-    The Second approach is using Dijkstra with dynamic programming to store number of paths.  
+The Second approach is using Dijkstra with dynamic programming to store number of paths.  
 ```python
     def countPaths(self, n: int, roads: List[List[int]]) -> int:  
             adj=[[] for _ in range(n)]  
@@ -610,7 +610,7 @@ The time complexity is O(V+E) and O(V) for color array.
                         path[v]=(path[v]+path[node])%MOD  
             return path[n-1] 
 ``` 
-    If time reduces then update path otherwise increment the path same as previous implementation. This approach is having time complexity of O((m+n)logn).  
+If time reduces then update path otherwise increment the path same as previous implementation. This approach is having time complexity of O((m+n)logn).  
     **\>\>Flyodd Warshal:**  
 ```python
     	dist=[[10**5 for _ in range(n)] for _ in range(n)]  
@@ -628,7 +628,7 @@ The time complexity is O(V+E) and O(V) for color array.
                             )  
 ```
              
-    **\>\> Disjoint Set Union**   
+**\>\> Disjoint Set Union**   
 ```python
     class DSU:  
        def __init__(self,n):  
@@ -775,32 +775,32 @@ The time complexity is O(V+E) and O(V) for color array.
 4. Count how many unique parents exist (`find(node) == node`)  
 5. Return `n - components` 
 ```python 
-   def removeStones(self, stones: List\[List\[int\]\]) \-\> int:  
-           n \= len(stones)  
-           maxRow \= 0  
-           maxCol \= 0  
+   def removeStones(self, stones: List[List[int]]) -> int:  
+           n = len(stones)  
+           maxRow = 0  
+           maxCol = 0  
            for x, y in stones:  
-               maxRow \= max(maxRow, x)  
-               maxCol \= max(maxCol, y)  
+               maxRow = max(maxRow, x)  
+               maxCol = max(maxCol, y)  
             
-           dsu \= DSU(maxRow \+ maxCol \+ \+2)  
-           unqNodes \= set()  
+           dsu = DSU(maxRow + maxCol + +2)  
+           unqNodes = set()  
             
            for row, col in stones:  
-               nodeRow \= row  
-               nodeCol \= maxRow \+ col \+1   
+               nodeRow = row  
+               nodeCol = maxRow + col +1   
                dsu.union(nodeRow, nodeCol)  
                unqNodes.add(nodeRow)  
                unqNodes.add(nodeCol)  
             
-           count \= 0  
+           count = 0  
            for node in unqNodes:  
-               if dsu.find(node) \== node:  
-                   count \+= 1  
+               if dsu.find(node) == node:  
+                   count+= 1  
             
-           return n \- count  
+           return n - count  
 ```
-   The Time complexity is O(stones\*α(stones)).  
+The Time complexity is O(stones\*α(stones)).  
      
      
      
@@ -854,7 +854,7 @@ The time complexity is O(V+E) and O(V) for color array.
 
  **18.Critical Connections**
 
-	There are n servers numbered from 0 to n \- 1 connected by undirected server-to-server connections forming a network where connections\[i\] \= \[ai, bi\] represents a connection between servers ai and bi. Any server can reach other servers directly or indirectly through the network.  
+There are n servers numbered from 0 to n \- 1 connected by undirected server-to-server connections forming a network where connections\[i\] \= \[ai, bi\] represents a connection between servers ai and bi. Any server can reach other servers directly or indirectly through the network.  
 A *critical connection* is a connection that, if removed, will make some servers unable to reach some other server.
 
 Return all critical connections in the network in any order.
