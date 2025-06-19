@@ -125,11 +125,11 @@ Basic approach is just find the preorder using the basic pre order recursive tra
           return;  
       }  
 ```
-But the followup is to use no extra space change it in place. So its  a relative to morris algo.  
+But the follow-up is to use no extra space change it in place. So its  a relative to morris algo.  
 here we need to traverse right most element of left subtree and connect it with the right subtree and make left subtree null until everything is flattened.  
     
     
-![][image1]  
+
 ```cpp 
   void flatten(TreeNode* root) {  
          if (!root)  
