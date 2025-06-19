@@ -17,8 +17,7 @@
       search: {
         maxAge: 86400000,
         paths: [
-          '/',
-          '/README.md',
+          '/', '/README.md',
           '/Arrays.md',
           '/Strings.md',
           '/LinkedList.md',
@@ -31,16 +30,32 @@
           '/Binary_Search.md',
           '/PrecompAndMaths.md'
         ],
-        placeholder: '🔍 Search problems...',
+        /* placeholder here is ignored by plugin, we’ll set it below */
+        placeholder: '',
         noData: '🙁 No matches found',
         depth: 4
       }
     };
   </script>
 
-
+  <!-- Docsify core -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-
+  <!-- Search plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+
+  <!-- Custom plugin to enforce placeholder -->
+  <script>
+    // prepend our plugin to existing list
+    window.$docsify.plugins = [
+      function (hook, vm) {
+        hook.doneEach(function () {
+          const inp = document.querySelector('.search input.search');
+          if (inp && !inp.getAttribute('placeholder')) {
+            inp.setAttribute('placeholder', '🔍 Search problems...');
+          }
+        });
+      }
+    ].concat(window.$docsify.plugins || []);
+  </script>
 </body>
 </html>
