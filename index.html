@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
   <title>DSA Handbook</title>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css" />
+  <link
+    rel="stylesheet"
+    href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css"
+  />
 </head>
 <body>
   <div id="app">Loading...</div>
@@ -14,48 +20,16 @@
       name: 'DSA Handbook',
       repo: '',
       loadSidebar: true,
-      search: {
-        maxAge: 86400000,
-        paths: [
-          '/', '/README.md',
-          '/Arrays.md',
-          '/Strings.md',
-          '/LinkedList.md',
-          '/Sliding_Window.md',
-          '/StackandQueue.md',
-          '/Recursion.md',
-          '/DP.md',
-          '/Graphs.md',
-          '/Trees.md',
-          '/Binary_Search.md',
-          '/PrecompAndMaths.md'
-        ],
-        /* placeholder here is ignored by plugin, we’ll set it below */
-        placeholder: '',
-        noData: '🙁 No matches found',
-        depth: 4
+      completeSearch: {
+        highlightMatches: true,
+        includeTitle: true,
+        maxDepth: 5,
+        path: '/'
       }
     };
   </script>
 
-  <!-- Docsify core -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <!-- Search plugin -->
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-
-  <!-- Custom plugin to enforce placeholder -->
-  <script>
-    // prepend our plugin to existing list
-    window.$docsify.plugins = [
-      function (hook, vm) {
-        hook.doneEach(function () {
-          const inp = document.querySelector('.search input.search');
-          if (inp && !inp.getAttribute('placeholder')) {
-            inp.setAttribute('placeholder', '🔍 Search problems...');
-          }
-        });
-      }
-    ].concat(window.$docsify.plugins || []);
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-complete-search@2.5.0/dist/docsify-complete-search.min.js"></script>
 </body>
 </html>
