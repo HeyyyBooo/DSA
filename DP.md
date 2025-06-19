@@ -253,7 +253,8 @@ So the overall time complexity is  O(mn).
 So by observation we can say that the issue is with negative and zero coming in the flow of the Subarray stream.  
 Now whenever there is a negative then the answer is either the left subarray sum or right subarray sum.  
 Which I am storing in prefix and suffix arrays.  
-![][image1]  
+ ![Screenshot-2023-08-05-174139](https://github.com/user-attachments/assets/e2dc87bb-52e7-4865-aef2-f832833d0580)
+
 And to handle the case where the product becomes zero I am re-initializing the prefix or suffix counter as the current case.  
 ```cpp
    int maxProduct(vector<int>& nums) {  
@@ -497,8 +498,9 @@ The time complexity of this approach is O(nlogn) better then the dynamic Program
       
 11. **Minimum Cost To Cut the a Stick**  
     Given a wooden stick of length n units. The stick is labelled from 0 to n. For example, a stick of length **6** is labelled as follows:
+![statement](https://github.com/user-attachments/assets/479ca7ce-3f81-4538-a37d-615a45bed4a9)
 
-    ![][image2]
+   
 
 Given an integer array cuts where cuts\[i\] denotes a position you should perform a cut at.  
 You should perform the cuts in order, you can change the order of the cuts as you wish.  
