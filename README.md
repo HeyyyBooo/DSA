@@ -1,6 +1,6 @@
 # 📚 DSA Topics Index
 
-Welcome to the **DSA Repository**. This index provides quick access to topic-wise problems and explanations.
+Welcome to the **DSA Repository**. This index provides quick access to topic-wise famous problems attempted by HeyyyBooo.
 
 ## 🔗 Topic-wise Links
 
