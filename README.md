@@ -14,4 +14,4 @@ Welcome to the **DSA Repository**. This index provides quick access to topic-wis
 - [Tree](./Trees.md)
 - [Graph](./Graphs.md)
 - [Binary Search](./Binary_Search.md)
-- [recomputation & Maths](./PrecompandmathsE.md)
+- [recomputation & Maths](./PrecompAndMaths.md)

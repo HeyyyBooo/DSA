@@ -1,5 +1,5 @@
 # Replace backslashes in a code block
-with open("Recursion.md", "r", encoding="utf-8") as f:
+with open("PrecompAndMaths.md", "r", encoding="utf-8") as f:
     content = f.read()
 
 # Only clean inside code blocks (optional)
@@ -11,5 +11,5 @@ def clean_backslashes_in_code_cpp(md_text):
 cleaned_content = clean_backslashes_in_code(content)
 cleaned_content = clean_backslashes_in_code_cpp(cleaned_content)
 
-with open("Recursion_cleaned.md", "w", encoding="utf-8") as f:
+with open("PrecompAndMaths.md_cleaned.md", "w", encoding="utf-8") as f:
     f.write(cleaned_content)
