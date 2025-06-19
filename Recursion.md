@@ -7,7 +7,7 @@ Report of Target 2025
 
 The '.' character indicates empty cells.	
 
-	A check function to check weather the number can be entered or not.  
+A check function to check weather the number can be entered or not.  
 ```cpp
  bool check(vector<vector<char>>& board, int i, int j,char ch){  
         int p=i/3;  
