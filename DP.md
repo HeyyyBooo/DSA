@@ -11,7 +11,7 @@ And two variable to keep track of the desired length (longest palindromic substr
 	  
 Now initially bestLen=1 bestStart=0 and dp(i,j)=true ∀ i=j.  
 ```cpp	  
-                int n = s.size();  
+	int n = s.size();  
         if (n < 2) return s;
 
         vector<vector<bool>> dp(n, vector<bool>(n, false));  
