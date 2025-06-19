@@ -390,4 +390,8 @@ Now ‘i’ is our last candidate element in ’132’ pattern that is ‘i’ i
       
 Otherwise we will continue the process by pushing values in stack and updating minimums.  
       
+<<<<<<< HEAD
 The Time complexity of this algorithm is O(n).
+=======
+The Time complexity of this algorithm is O(n).
+>>>>>>> ffbd49d9bac0f5419de7baaa0a8d73d9bba659dd
