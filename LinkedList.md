@@ -13,47 +13,47 @@ Just directly implementing the use case using recursion call, i am just using re
 ```cpp     
    class Solution {  
    public:  
-      ListNode\* ans;  
-      ListNode\* ptr;  
+      ListNode* ans;  
+      ListNode* ptr;  
       int n;  
-      ListNode\* last;  
-      void rec(ListNode\* head, int k) {  
+      ListNode* last;  
+      void rec(ListNode* head, int k) {  
           if (head) {  
-              if (k \== 1) {  
-                  int v \= head\-\>val;  
-                  ListNode\* temp \= new ListNode(v);  
-                  ptr\-\>next \= temp;  
-                  ptr \= ptr\-\>next;  
-                  last \= head\-\>next;  
+              if (k == 1) {  
+                  int v = head->val;  
+                  ListNode* temp = new ListNode(v);  
+                  ptr->next = temp;  
+                  ptr = ptr->next;  
+                  last = head->next;  
                   return;  
      
               } else {  
-                  rec(head\-\>next, k \- 1);  
-                  int v \= head\-\>val;  
-                  ListNode\* temp \= new ListNode(v);  
-                  ptr\-\>next \= temp;  
-                  ptr \= ptr\-\>next;  
+                  rec(head->next, k - 1);  
+                  int v = head->val;  
+                  ListNode* temp = new ListNode(v);  
+                  ptr->next = temp;  
+                  ptr = ptr->next;  
               }  
           }  
       }  
      
-      ListNode\* reverseKGroup(ListNode\* head, int k) {  
-          ans \= new ListNode();  
-          ptr \= ans;  
-          n \= k;  
-          int size \= 0;  
-          ListNode\* sizetracker \= head;  
+      ListNode* reverseKGroup(ListNode* head, int k) {  
+          ans = new ListNode();  
+          ptr = ans;  
+          n = k;  
+          int size = 0;  
+          ListNode* sizetracker = head;  
           while (sizetracker) {  
               size++;  
-              sizetracker \= sizetracker\-\>next;  
+              sizetracker = sizetracker->next;  
           }  
-          int loop \= size / k;  
+          int loop = size / k;  
           last=head;  
           while (loop--) {  
               rec(last, k);  
           }  
-          ptr\-\>next \= last;  
-          return ans\-\>next;  
+          ptr->next = last;  
+          return ans->next;  
       }  
    };  
 ``` 
@@ -65,26 +65,26 @@ Here size tracker is used to determine the extra remaining part of the linked li
 As k can be greater than n, the size of I am using modulo mathematical operator to simulate the ring that i will be rotating.  
 
 ```cpp
-    ListNode\* rotateRight(ListNode\* head, int k) {  
+    ListNode* rotateRight(ListNode* head, int k) {  
           if(head==NULL){  
               return head;  
           }  
-          ListNode\* temp=head;  
+          ListNode* temp=head;  
           int n=1;  
-          while(temp\-\>next\!=NULL){  
-              temp=temp\-\>next;  
+          while(temp->next!=NULL){  
+              temp=temp->next;  
               n++;  
           }  
-          temp\-\>next\=head;  
-          ListNode\* trav=head;  
+          temp->next=head;  
+          ListNode* trav=head;  
           int l=n-k%n;  
           L--;  
      
           while(l--){  
-              trav=trav\-\>next;  
+              trav=trav->next;  
           }  
-          ListNode\* ans=trav\-\>next;  
-          trav\-\>next\=NULL;  
+          ListNode* ans=trav->next;  
+          trav->next=NULL;  
           return ans;  
      
      
@@ -102,25 +102,25 @@ Given the root of a binary tree, flatten the tree into a "linked list":
     
 Basic approach is just find the preorder using the basic pre order recursive travel. And then blend the list accordingly  
 ```cpp
-  void preorder(TreeNode \*root) {  
-     if (root \!= NULL) {  
-        v.push\_back(root\-\>val);  
-        preorder(root\-\>left);  
-        preorder(root\-\>right);  
+  void preorder(TreeNode *root) {  
+     if (root != NULL) {  
+        v.push_back(root->val);  
+        preorder(root->left);  
+        preorder(root->right);  
      }  
   }  
-  void flatten(TreeNode\* root) {  
-          if(root\==NULL) return ;  
-          TreeNode\* temp\=root;  
+  void flatten(TreeNode* root) {  
+          if(root==NULL) return ;  
+          TreeNode* temp=root;  
           preorder(temp);  
-          for(int i\=0;i\<v.size()\-1;i\++){  
-              temp\-\>val\=v\[i\];  
-              temp\-\>left\=NULL;  
-              temp\-\>right\=new TreeNode();  
-              temp\=temp\-\>right;  
+          for(int i=0;i<v.size()-1;i++){  
+              temp->val=v[i];  
+              temp->left=NULL;  
+              temp->right=new TreeNode();  
+              temp=temp->right;  
           }  
-          temp\-\>val\=v\[v.size()\-1\];  
-          temp\-\>left\=NULL;  
+          temp->val=v[v.size()-1];  
+          temp->left=NULL;  
             
           return;  
       }  
@@ -131,20 +131,20 @@ here we need to traverse right most element of left subtree and connect it with 
     
 ![][image1]  
 ```cpp 
-  void flatten(TreeNode\* root) {  
-         if (\!root)  
+  void flatten(TreeNode* root) {  
+         if (!root)  
              return;  
-         TreeNode\* mover \= root;  
+         TreeNode* mover = root;  
          while (mover) {  
-             if (mover\-\>left) {  
-                 TreeNode\* temp \= mover\-\>left;  
-                 while (temp\-\>right)  
-                     temp \= temp\-\>right;  
-                 temp\-\>right \= mover\-\>right;  
-                 mover\-\>right \= mover\-\>left;  
-                 mover\-\>left \= nullptr;  
+             if (mover->left) {  
+                 TreeNode* temp = mover->left;  
+                 while (temp->right)  
+                     temp = temp->right;  
+                 temp->right = mover->right;  
+                 mover->right = mover->left;  
+                 mover->left = nullptr;  
              }  
-             mover \= mover\-\>right;  
+             mover = mover->right;  
          }  
      }  
 ```
@@ -159,31 +159,31 @@ here we need to traverse right most element of left subtree and connect it with 
 I am going to use map to maintain mapping between original and deep copy then using that map i am going to connect the copy list and then simply execute this,  
 
 ```cpp
-   Node\* copyRandomList(Node\* head) {  
-          if (head \== NULL) {  
+   Node* copyRandomList(Node* head) {  
+          if (head == NULL) {  
               return head;  
           }  
-          map\<Node\*, Node\*\> mp;  
-          Node\* copy \= new Node(head\-\>val);  
-          Node\* p1 \= head;  
-          Node\* p2 \= copy;  
-          p1 \= p1\-\>next;  
-          mp\[head\] \= copy;  
+          map<Node*, Node*> mp;  
+          Node* copy = new Node(head->val);  
+          Node* p1 = head;  
+          Node* p2 = copy;  
+          p1 = p1->next;  
+          mp[head] = copy;  
           while (p1) {  
-              Node\* temp \= new Node(p1\-\>val);  
-              mp\[p1\] \= temp;  
-              p1 \= p1\-\>next;  
-              p2\-\>next \= temp;  
-              p2=p2\-\>next;  
+              Node* temp = new Node(p1->val);  
+              mp[p1] = temp;  
+              p1 = p1->next;  
+              p2->next = temp;  
+              p2=p2->next;  
           }  
-          p1 \= head;  
-          p2 \= copy;  
+          p1 = head;  
+          p2 = copy;  
           while (p1) {  
-              if (p1\-\>random\!=NULL) {  
-                  p2\-\>random \= mp\[p1\-\>random\];  
+              if (p1->random!=NULL) {  
+                  p2->random = mp[p1->random];  
               }  
-              p1 \= p1\-\>next;  
-              p2 \= p2\-\>next;  
+              p1 = p1->next;  
+              p2 = p2->next;  
           }  
           return copy;  
       }  
@@ -194,15 +194,15 @@ I am going to use map to maintain mapping between original and deep copy then us
    
 Approach one is that i am going to use slow &  fast pointer approach when these two pointer will match then thats the point of cycle.  
 ```cpp
-   bool hasCycle(ListNode \*head) {  
-          ListNode\* fast \= head;  
-          ListNode\* slow \= head;  
+   bool hasCycle(ListNode *head) {  
+          ListNode* fast = head;  
+          ListNode* slow = head;  
      
-          while (fast \!= nullptr && fast\-\>next \!= nullptr) {  
-              fast \= fast\-\>next\-\>next;  
-              slow \= slow\-\>next;  
+          while (fast != nullptr && fast->next != nullptr) {  
+              fast = fast->next->next;  
+              slow = slow->next;  
      
-              if (fast \== slow) {  
+              if (fast == slow) {  
                   return true;  
               }  
           }  
@@ -213,16 +213,16 @@ Approach one is that i am going to use slow &  fast pointer approach when these 
 Another approach is that i can use a footprint where i travel , if i find footprint while traversing that means its already visited. I used infinity as foot print as according to constraints its not a valid value of linked list.  
    
 ```cpp
-   bool hasCycle(ListNode \*head) {  
-         ListNode\* temp\=head;  
-         bool ans\=false;  
-         while(temp\!=NULL){  
-             if(temp\-\>val\==INT\_MIN){  
-                 ans\=true;  
+   bool hasCycle(ListNode *head) {  
+         ListNode* temp=head;  
+         bool ans=false;  
+         while(temp!=NULL){  
+             if(temp->val==INT_MIN){  
+                 ans=true;  
                  break;  
              }  
-             temp\-\>val\=INT\_MIN;  
-             temp\=temp\-\>next;  
+             temp->val=INT_MIN;  
+             temp=temp->next;  
      
          }  
          return ans;    
@@ -246,15 +246,15 @@ Then: Reset slow to head and move both one step at a time — they’ll meet at 
 
    
 ```cpp
-   ListNode\* detectCycle(ListNode\* head) {
-          if(\!head) return NULL;
-          if(head\-\>next\==NULL) return NULL;
-          ListNode\* slow \= head;
-          ListNode\* fast \= head;
+   ListNode* detectCycle(ListNode* head) {
+          if(!head) return NULL;
+          if(head->next==NULL) return NULL;
+          ListNode* slow = head;
+          ListNode* fast = head;
           bool flag=false;
-          while(fast and fast\-\>next){
-              slow=slow\-\>next;
-              fast=fast\-\>next\-\>next;
+          while(fast and fast->next){
+              slow=slow->next;
+              fast=fast->next->next;
               if(slow==fast){
                 flag=true;
                 break;
@@ -262,9 +262,9 @@ Then: Reset slow to head and move both one step at a time — they’ll meet at 
           }
           if(flag){
               slow=head;
-              while(slow\!=fast){
-                  slow=slow\-\>next;
-                  fast=fast\-\>next;
+              while(slow!=fast){
+                  slow=slow->next;
+                  fast=fast->next;
               }
               return slow;
           }
@@ -280,14 +280,14 @@ It has a linear time complexity.
 Iterative: 
 
 ```cpp 
-     ListNode\* reverseList(ListNode\* head) {  
-           ListNode\* node \= nullptr;  
+     ListNode* reverseList(ListNode* head) {  
+           ListNode* node = nullptr;  
      
-           while (head \!= nullptr) {  
-               ListNode\* temp \= head\-\>next;  
-               head\-\>next \= node;  
-               node \= head;  
-               head \= temp;  
+           while (head != nullptr) {  
+               ListNode* temp = head->next;  
+               head->next = node;  
+               node = head;  
+               head = temp;  
            }  
      
            return node;          
@@ -295,22 +295,22 @@ Iterative:
 ```
 Recursive:
 ```cpp
-    ListNode\* headR;  
-    ListNode\* ptr;  
-    void rec(ListNode\* node){  
+    ListNode* headR;  
+    ListNode* ptr;  
+    void rec(ListNode* node){  
        if(node){  
-           rec(node\-\>next);  
-           ptr\-\>next\=node;  
-           ptr=ptr\-\>next;  
+           rec(node->next);  
+           ptr->next=node;  
+           ptr=ptr->next;  
        }  
       return;  
      }  
-   ListNode\* reverseList(ListNode\* head) {  
+   ListNode* reverseList(ListNode* head) {  
        headR= new ListNode();  
        ptr=headR;  
        rec(head);  
-       ptr\-\>next\=NULL;  
-       return headR\-\>next;  
+       ptr->next=NULL;  
+       return headR->next;  
    } 
 ``` 
 Both are equivalent approach just using a temporary pointer to reverse the list and return the new head.
@@ -322,25 +322,25 @@ I am first finding the mid and pushing all values before mid into a stack then c
 
 
 ```cpp    
-   bool isPalindrome(ListNode\* head) {  
-      if (\!head || \!head\-\>next) return true;  
+   bool isPalindrome(ListNode* head) {  
+      if (!head || !head->next) return true;  
      
-      ListNode\* slow \= head;  
-      ListNode\* fast \= head;  
-      stack\<int\> st;  
-      while (fast && fast\-\>next) {  
-          st.push(slow\-\>val);  
-          slow \= slow\-\>next;  
-          fast \= fast\-\>next\-\>next;  
+      ListNode* slow = head;  
+      ListNode* fast = head;  
+      stack<int> st;  
+      while (fast && fast->next) {  
+          st.push(slow->val);  
+          slow = slow->next;  
+          fast = fast->next->next;  
       }  
       if (fast) {  
-          slow \= slow\-\>next;  
+          slow = slow->next;  
       }  
       while (slow) {  
-          int top \= st.top();  
+          int top = st.top();  
           st.pop();  
-          if (top \!= slow\-\>val) return false;  
-          slow \= slow\-\>next;  
+          if (top != slow->val) return false;  
+          slow = slow->next;  
       }  
      
       return true;  
@@ -350,24 +350,24 @@ The follow up of the problem is to do it in O(n) Time and O(1) extra space. So I
 Using same reverse the list approach  and matching.  
 
 ```cpp   
-   ListNode\* ptr;  
+   ListNode* ptr;  
       bool ans;  
-      void rec(ListNode\* head){  
+      void rec(ListNode* head){  
           if(head){  
-              rec(head\-\>next);  
-              if(head\-\>val\!=ptr\-\>val){  
+              rec(head->next);  
+              if(head->val!=ptr->val){  
                   ans=false;  
               }  
-              head=head\-\>next;  
-              ptr=ptr\-\>next;  
+              head=head->next;  
+              ptr=ptr->next;  
           }  
           return;  
       }  
      
      
      
-      bool isPalindrome(ListNode\* head) {  
-      if (\!head || \!head\-\>next) return true;  
+      bool isPalindrome(ListNode* head) {  
+      if (!head || !head->next) return true;  
       ptr=head;  
       ans=true;  
       rec(head);  
@@ -381,29 +381,29 @@ I am going to find the half of the LInked list and going to reverse the second h
 
 
 ```cpp   
-   bool isPalindrome(ListNode\* head) {  
-          ListNode\* slow=head;  
-          ListNode\* fast=head;  
-          while(fast and fast\-\>next){  
-              fast=fast\-\>next\-\>next;  
-              slow=slow\-\>next;  
+   bool isPalindrome(ListNode* head) {  
+          ListNode* slow=head;  
+          ListNode* fast=head;  
+          while(fast and fast->next){  
+              fast=fast->next->next;  
+              slow=slow->next;  
           }  
           if(fast){  
-              slow\-\>next;  
+              slow->next;  
           }  
-          ListNode\*head2=NULL;  
+          ListNode*head2=NULL;  
           while(slow){  
-              ListNode\* temp=slow\-\>next;  
-              slow\-\>next\=head2;  
+              ListNode* temp=slow->next;  
+              slow->next=head2;  
               head2=slow;  
               slow=temp;  
           }  
           while(head2){  
-              if(head\-\>val\!=head2\-\>val){  
+              if(head->val!=head2->val){  
                   return false;  
               }  
-              head=head\-\>next;  
-              head2=head2\-\>next;  
+              head=head->next;  
+              head2=head2->next;  
           }  
           return true;  
       }  
@@ -423,13 +423,13 @@ Now its Time Complexity is O(n)  and Space Complexity is O(1).
 As I only have that node so i cannt modify the storage so i will copy the next value in current and will delete the last memory cell of Linked list . As a result it will mimic as the List with removed node.  
 
 ```cpp    
-  void deleteNode(ListNode\* node) {  
-         while(node\-\>next\-\>next){  
-             node\-\>val\=node\-\>next\-\>val;  
-             node=node\-\>next;  
+  void deleteNode(ListNode* node) {  
+         while(node->next->next){  
+             node->val=node->next->val;  
+             node=node->next;  
          }  
-         node\-\>val\=node\-\>next\-\>val;  
-         node\-\>next\=NULL;  
+         node->val=node->next->val;  
+         node->next=NULL;  
      }  
 ```   
     
@@ -452,34 +452,34 @@ As I only have that node so i cannt modify the storage so i will copy the next v
 
 First Task is to find the middle of the list. And break it into two halves.  
 ```cpp
-      ListNode\*slow=head;  
-            ListNode\*fast=head;  
-            while(fast and fast\-\>next){  
-                slow=slow\-\>next;  
-                fast=fast\-\>next\-\>next;  
+      ListNode*slow=head;  
+            ListNode*fast=head;  
+            while(fast and fast->next){  
+                slow=slow->next;  
+                fast=fast->next->next;  
             }  
-            ListNode\* prev=NULL;  
-            ListNode\* curr=slow\-\>next;  
-            slow\-\>next\=NULL;  
+            ListNode* prev=NULL;  
+            ListNode* curr=slow->next;  
+            slow->next=NULL;  
 ```      
 Then reverse the second half.
 ```cpp  
     	while(curr){  
-                ListNode\*temp=curr\-\>next;  
-                curr\-\>next\=prev;  
+                ListNode*temp=curr->next;  
+                curr->next=prev;  
                 prev=curr;  
                 curr=temp;  
             }  
 ```
 Then at last using two pointers join the list in given pattern.  
 ```cpp
-    	    ListNode\* first=head;  
-            ListNode\* second=prev;  
+    	    ListNode* first=head;  
+            ListNode* second=prev;  
             while(second){  
-                ListNode\* temp1=first\-\>next;  
-                ListNode\* temp2=second\-\>next;  
-                first\-\>next\=second;  
-                second\-\>next\=temp1;  
+                ListNode* temp1=first->next;  
+                ListNode* temp2=second->next;  
+                first->next=second;  
+                second->next=temp1;  
                 first=temp1;  
                 second=temp2;  
             }  
