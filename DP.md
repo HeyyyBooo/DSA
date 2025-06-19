@@ -498,9 +498,10 @@ The time complexity of this approach is O(nlogn) better then the dynamic Program
       
 11. **Minimum Cost To Cut the a Stick**  
     Given a wooden stick of length n units. The stick is labelled from 0 to n. For example, a stick of length **6** is labelled as follows:
+
+    
 ![statement](https://github.com/user-attachments/assets/479ca7ce-3f81-4538-a37d-615a45bed4a9)
 
-   
 
 Given an integer array cuts where cuts\[i\] denotes a position you should perform a cut at.  
 You should perform the cuts in order, you can change the order of the cuts as you wish.  
