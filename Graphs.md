@@ -891,3 +891,103 @@ def criticalConnections(self, n: int, connections: List[List[int]]) -> List[List
 `tin[node]`: Time when the node is first visited.  
 `low[node]`: Lowest discovery time reachable from the node (including back-edges).  
 The time complexity is O(n + m) where n is the number of nodes and m is the number of edges.
+
+
+**19\. Shortest Path in Binary Matrix(8way)**  
+	Given an n x n binary matrix grid, return *the length of the shortest **clear path** in the matrix*. If there is no clear path, return \-1.  
+A **clear path** in a binary matrix is a path from the **top-left** cell (i.e., (0, 0)) to the **bottom-right** cell (i.e., (n \- 1, n \- 1)) such that:
+
+* All the visited cells of the path are 0\.  
+* All the adjacent cells of the path are **8-directionally** connected (i.e., they are different and they share an edge or a corner).
+
+The **length of a clear path** is the number of visited cells of this path.
+
+This is the problem of 8 way traversing so the main catch of the problem is the direction array that will be used to traverse in 8 ways.  
+```python
+dir=[1,0,-1,0,1,1,-1,-1,1]  
+```
+
+X will be updated with ith and y will be updated with i+1th.
+Here is the code with full implementation.
+
+```python
+def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:  
+        n=len(grid)  
+        if n==1:  
+            if grid[0][0]==0:  
+                return 1  
+            else:  
+                return -1  
+        if grid[0][0]:  
+            return -1  
+        q=deque()  
+        vis=set()  
+        def isvalid(i,j):  
+            if i<0 or i>=n:  
+                return False  
+            if j<0 or j>=n:  
+                return False  
+            return True  
+        q.append((0,0,1))  
+        vis.add((0,0))  
+        dir=[1,0,-1,0,1,1,-1,-1,1]  
+        while q:  
+            i,j,d=q.popleft()  
+            if i==n-1 and j==n-1:  
+                return d  
+            for k in range(8):  
+                newI,newJ=i+dir[k],j+dir[k+1]  
+                if isvalid(newI,newJ) and grid[newI][newJ]==0 and (newI,newJ) not in vis:  
+                    q.append((newI,newJ,d+1))  
+                    vis.add((newI,newJ))  
+        return -1 
+``` 
+This is a simple BFS to find path distance level wise.
+
+**20\. Path With Minimum Efforts**  
+You are a hiker preparing for an upcoming hike. You are given heights, a 2D array of size rows x columns, where heights\[row\]\[col\] represents the height of cell (row, col). You are situated in the top-left cell, (0, 0), and you hope to travel to the bottom-right cell, (rows-1, columns-1) (i.e., 0-indexed). You can move up, down, left, or right, and you wish to find a route that requires the minimum effort.  
+A route's effort is the maximum absolute difference in heights between two consecutive cells of the route.
+
+Return *the minimum effort required to travel from the top-left cell to the bottom-right cell.*
+
+I am thinking of a binary search approach where my answer will be minimized and I will get the solutions set by dfs .  
+Now the range of solution is 0 effort to max effort that is the difference between lowest and highest peak of mountains.  
+The DFS is a boolean DFS to check whether I can reach the end from start using given effort and using the Binary search algorithm I will find the minimum effort.
+
+```python
+def minimumEffortPath(self, height: List[List[int]]) -> int:  
+        mini=min([min(x) for x in height])  
+        maxi=max([max(x) for x in height])  
+        m,n=len(height),len(height[0])  
+        def getSol(effort):  
+            def isvalid(i,j):  
+                if i<0 or i>=m:  
+                    return False  
+                if j<0 or j>=n:  
+                    return False  
+                return True  
+            dire=[1,0,-1,0,1]  
+            vis=set()  
+            def dfs(i,j):  
+                vis.add((i,j))  
+                if i==m-1 and j==n-1:  
+                    return True  
+                for k in range(4):  
+                    newI,newJ=i+dire[k],j+dire[k+1]  
+                    if isvalid(newI,newJ) and abs(height[i][j]-height[newI][newJ])<=effort and (newI,newJ) not in vis:  
+                        if dfs(newI,newJ):  
+                            return True  
+                return False  
+            return dfs(0,0)  
+        low,high=0,maxi-mini  
+        ans=high  
+        while low<=high :  
+            mid=(low+high)//2  
+            if getSol(mid):  
+                ans=min(ans,mid)  
+                high=mid-1  
+            else:  
+                low=mid+1  
+        return ans  
+```
+Again the direction used is based on 1D direction list same as previous question.
