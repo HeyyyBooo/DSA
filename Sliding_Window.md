@@ -52,7 +52,43 @@ For each window I am keeping track of the window maximum in the heapified multis
            return ans;  
        }  
 ```
-The time complexity of the code is O(nlogn).  
+The time complexity of the code is O(nlogn). 
+In python we can use SortedList() to replicate the Multiset Behavior of LogN insertion and deletion.
+```python
+def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        ans=[]
+        multiset=SortedList()
+        left,right=0,0
+        while right<len(nums):
+            multiset.add(nums[right])
+            if right-left+1==k:
+                ans.append(multiset[-1])
+                multiset.remove(nums[left])
+                left+=1
+            right+=1
+        return ans
+```
+
+Also Another approach is this problem is done by double ended queue.
+```python
+def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        q = deque()
+        ans = []
+        #Q front is the max elements index
+        for i in range(len(nums)):
+            #if max elements index is less than i - k means its outside window
+            while q and q[0] < i - k + 1:
+                q.popleft()
+            #we are maintaining monotonic decreasing queue so removing redundant 
+            while q and nums[q[-1]] < nums[i]:
+                q.pop()
+            q.append(i)
+            # we have reached at first window now onwards Q's 1st element is ans
+            if i >= k - 1 :
+                ans.append(nums[q[0]])
+        return ans
+```
+This has a linear Time Complexity.
      
 3. **Sliding Window Median**  
    The **median** is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle values.  
