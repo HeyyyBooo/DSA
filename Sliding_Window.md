@@ -143,4 +143,45 @@ Now Final Maximized Satisfaction \= max{ Satisfaction } across all {i,j}.
            return ans;  
        }
 ```
-The time complexity is based on the Hashing Data structure. For unordered one it will be O(n). 
+The time complexity is based on the Hashing Data structure. For unordered one it will be O(n).
+
+5. **Minimum Window Substring**  
+   Given two strings s and t of lengths m and n respectively, return *the **minimum window*** ***substring** of* s *such that every character in* t *(**including duplicates**) is included in the window*. If there is no such substring, return *the empty string* "".  
+   The test cases will be generated such that the answer is **unique**.
+
+
+So I will maintain a fixed map of t and a variable hashmap for windows .
+
+Now I will start with window 0 and keep on increasing the values in window hashmap when it matches the same frequency that is required. I will update the answer and will search for further smaller windows by moving the left pointer of the window. And keep on updating the window Answer of length and for each minimum I will update the left and right answer that I will later use to return the answer.
+
+   
+
+   
+```python
+   def minWindow(self, s: str, t: str) -> str:
+           if len(s)==0 or len(t)==0:
+               return ""
+           t_count=Counter(t)
+           req=len(t_count)
+           left,right=0,0
+           formed=0
+           windowCount=defaultdict(int)
+           ans=(-1,0,0)
+           while right<len(s):
+               windowCount[s[right]]+=1
+               if s[right] in t_count.keys() and windowCount[s[right]]==t_count[s[right]]:
+                   formed+=1
+               while left<=right and formed==req:
+                   c=s[left]
+                   a,l,r=ans
+                   if a==-1 or right-left+1<a:
+                       ans=(right-left+1,left,right)
+                   windowCount[c]-=1
+                   if c in t_count and windowCount[c]<t_count[c]:
+                       formed-=1
+                   left+=1
+               right+=1
+           a,l,r=ans
+           return "" if a==-1 else s[l:r+1]
+```
+The time complexity is O(m+n).
