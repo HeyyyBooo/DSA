@@ -389,9 +389,6 @@ So in stack I have stored the element and the minimum that is present before tha
 Now ‘i’ is our last candidate element in ’132’ pattern that is ‘i’ is our ’ 2’ and we will pop until we get our ‘3’ and when we get ‘3’ we will check if its minimum present in left is less than our ith element. If its there then we found our element ‘1’.  
       
 Otherwise we will continue the process by pushing values in stack and updating minimums.  
-      
-<<<<<<< HEAD
+
 The Time complexity of this algorithm is O(n).
-=======
-The Time complexity of this algorithm is O(n).
->>>>>>> ffbd49d9bac0f5419de7baaa0a8d73d9bba659dd
+
