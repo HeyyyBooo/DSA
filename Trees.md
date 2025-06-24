@@ -959,4 +959,59 @@ Now this is building the Tree again from the string.
            return ans
 ```  
 Done with worst case time complexity of O(n)   
-   
+
+
+**29\.  Amount of Time for Binary Tree to Infected**  
+**You are given the root of a binary tree with unique values, and an integer start. At minute 0, an infection starts from the node with value start.**  
+**Each minute, a node becomes infected if:**
+
+* **The node is currently uninfected.**  
+* **The node is adjacent to an infected node.**  
+  **Return *the number of minutes needed for the entire tree to be infected.***
+
+ 
+
+Thinking of a one-pass approach directly is tough for this problem and naive BFS approach using build graph is very easy.  
+Now Let's think this is a split problem: the time is nothing but the maximum distance from the start node present in the tree. Now split into two cases , a subtree and a supertree  from node start.  
+To track depth we will use simple recursive dfs but for above we will return negative depth which is height. The absolute value will be the distance from start to root.
+
+Algorithm: (Editorial Version)
+
+1. Define a function that performs a depth-first search of the tree that returns depth and calculates and saves max\_time.If node \== null set depth \= 0 and return.  
+   * Recursively call with node.right and save.  
+   * Recursively call with node.left and save.  
+   * If node \= start the node is the start node:  
+     * Set max\_time \= max(left, right) to calculate the start node's max depth.  
+     * return depth \= \-1 to signify this is the start node.  
+   * If the left Depth and right Depth are both greater than or equal to 0, the start node is not in this subtree:  
+     * Return depth \= max(left, right) \+ 1 to calculate the current root's max depth.  
+   * Else, the current root's subtree contains the start node:  
+     * Distance is the sum of abs(left) and abs(right), which is the distance of the furthest node in the other subtree.  
+     * Set max\_time \= max(max\_time, distance) to update max\_time if distance is larger.  
+     * Return  depth \= min(leftDepth, rightDepth) \- 1, a negative number that signifies the subtree containing the start node and represents the distance of the start node from the root.
+```python
+class Solution:  
+    def amountOfTime(self, root: Optional[TreeNode], start: int) -> int:  
+        max_time=0  
+        def dfs(node):  
+            nonlocal max_time  
+            if not node:  
+                return 0  
+            left=dfs(node.left)  
+            right=dfs(node.right)  
+            if node.val==start:  
+                # Checking for bottom subtree  
+                max_time=max(left,right)  
+                return -1 #Now time for negative depth(ie. Height)  
+            elif left>=0 and  right>=0:  
+                #Search is still on  
+                return max(left,right)+1  
+            else:  
+                #subtree contains start  
+                dist=abs(left)+abs(right)  
+                max_time=max(max_time,dist)  
+                return min(left,right)-1  
+        dfs(root)  
+        return max_time
+```
+The Time complexity is O(n).
