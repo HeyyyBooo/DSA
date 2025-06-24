@@ -977,7 +977,7 @@ To track depth we will use simple recursive dfs but for above we will return neg
 
 Algorithm: (Editorial Version)
 
-1. Define a function that performs a depth-first search of the tree that returns depth and calculates and saves max\_time.If node \== null set depth \= 0 and return.  
+Define a function that performs a depth-first search of the tree that returns depth and calculates and saves max\_time.If node \== null set depth \= 0 and return.  
    * Recursively call with node.right and save.  
    * Recursively call with node.left and save.  
    * If node \= start the node is the start node:  
@@ -1015,3 +1015,30 @@ class Solution:
         return max_time
 ```
 The Time complexity is O(n).
+
+**30\. Distribute Coins In Binary Tree**	  
+You are given the root of a binary tree with n nodes where each node in the tree has node.val coins. There are n coins in total throughout the whole tree.  
+In one move, we may choose two adjacent nodes and move one coin from one node to another. A move may be from parent to child, or from child to parent.
+
+Return *the **minimum** number of moves required to make every node have **exactly** one coin*.
+
+So explaining this is very tough in my opinion. Each leaf is returning its need/extra negative means need in the subtree and positive means extra in subtree now moves is nothing but sum of these two absolute values.  
+We will call dfs to calculate left and right need/extra from subtree and return after using 1 coin for the current node.
+
+```python
+class Solution:  
+    def __init__(self):  
+        self.moves=0  
+    def distributeCoins(self, root: Optional[TreeNode]) -> int:  
+        def dfs(node):  
+            if not node:  
+                return 0  
+            left=dfs(node.left)  
+            right=dfs(node.right)  
+            self.moves+=abs(left)+abs(right)  
+            return node.val - 1 + left + right  
+        dfs(root)  
+        return self.moves 
+```
+The time complexity is O(n).  
+ 
