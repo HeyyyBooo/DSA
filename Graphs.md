@@ -991,3 +991,121 @@ def minimumEffortPath(self, height: List[List[int]]) -> int:
         return ans  
 ```
 Again the direction used is based on 1D direction list same as previous question.
+
+**21\. Swim in Rising Water**  
+You are given an n x n integer matrix grid where each value grid\[i\]\[j\] represents the elevation at that point (i, j).
+
+The rain starts to fall. At time t, the depth of the water everywhere is t. You can swim from a square to another 4-directionally adjacent square if and only if the elevation of both squares individually are at most t. You can swim infinite distances in zero time. Of course, you must stay within the boundaries of the grid during your swim.
+
+Return *the least time until you can reach the bottom right square* (n \- 1, n \- 1\) *if you start at the top left square* (0, 0).
+
+Direct Binary Search approach using brute force DFS as follows.
+
+```python
+def swimInWater(self, grid: List[List[int]]) -> int:  
+        low,high=0,max(list(max(x) for x in grid))  
+        n=len(grid)  
+        def isvalid(i,j):  
+            if i<0 or i>=n:  
+                return False  
+            if j<0 or j>=n:  
+                return False  
+            return True  
+        def canWe(time):  
+            if grid[0][0] > time:  
+                return False  
+            pos=False  
+            dir=[1,0,-1,0,1]  
+            vis=set()  
+            def dfs(i,j):  
+                nonlocal pos  
+                vis.add((i,j))  
+                if i==n-1 and j==n-1:  
+                    pos=True  
+                    return  
+                for k in range(4):  
+                    newI,newJ=i+dir[k],j+dir[k+1]  
+                    if isvalid(newI,newJ) and (newI,newJ) not in vis and grid[newI][newJ]<=time:  
+                        dfs(newI,newJ)  
+            dfs(0,0)  
+            return pos  
+        ans=high  
+        while low<=high:  
+            mid=(low+high)//2  
+            if canWe(mid):  
+                ans=min(ans,mid)  
+                high=mid-1  
+            else:  
+                low=mid+1  
+        return ans
+```
+The time complexity of binary search approach is O(n2).
+
+Now the Dijkstra Approach using heap. Our goal is to greedily pick the minimum available option in the neighbourhood of max height along the paths.  
+That is pick the minimum path and path value is maximum height along the path.
+
+```python
+def swimInWater(self, grid: List[List[int]]) -> int:  
+        vis=set()  
+        n=len(grid)  
+        pq=PriorityQueue()  
+        pq.put((grid[0][0],0,0))  
+        vis.add((0,0))  
+        ans=-1  
+        dirs=[1,0,-1,0,1]  
+        def isvalid(i,j):  
+            if i<0 or i>=n:  
+                return False  
+            if j<0 or j>=n:  
+                return False  
+            return True  
+        while not pq.empty():  
+            height,i,j=pq.get()  
+            if i==n-1 and j==n-1:  
+                return height  
+            for k in range(4):  
+                newI,newJ=i+dirs[k],j+dirs[k+1]  
+                if isvalid(newI,newJ) and (newI,newJ) not in vis:  
+                    vis.add((newI,newJ))  
+                    pq.put((max(height,grid[newI][newJ]),newI,newJ))  
+        return ans
+````
+Now the time complexity of this approach is again O(n2logn).
+
+And the most optimized version of this problem is done using Disjoint set union.
+
+Make union within range of t and neighborhood  if (0,0) and (n-1,n-1) is connected after time t then that's our answer.
+
+
+```python
+def swimInWater(self, grid: List[List[int]]) -> int:  
+        n=len(grid)  
+        dsu=DSU(n*n)  
+        mp=defaultdict(tuple)  
+        dirs=[1,0,-1,0,1]  
+        def isvalid(i,j):  
+            if i<0 or i>=n:  
+                return False  
+            if j<0 or j>=n:  
+                return False  
+            return True  
+        for i in range(n):  
+            for j in range(n):  
+                mp[grid[i][j]]=(i,j)  
+        def RedDim(i,j):  
+            return i*n+j  
+        flooded=set()  
+        maxi=max(list(max(x) for x in grid))  
+        for t in range(0,maxi+1):  
+            if t in mp.keys():  
+                i,j=mp[t]  
+                flooded.add((i,j))  
+                for k in range(4):  
+                    newI,newJ=i+dirs[k],j+dirs[k+1]  
+                    if isvalid(newI,newJ) and (newI,newJ) in flooded:  
+                        dsu.union(RedDim(i,j),RedDim(newI,newJ))  
+                if dsu.isconnected(0,n*n-1):  
+                    return t  
+        return -1
+```
+This is having the time complexity of O(n2).
