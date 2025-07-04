@@ -1109,3 +1109,360 @@ def swimInWater(self, grid: List[List[int]]) -> int:
         return -1
 ```
 This is having the time complexity of O(n2).
+
+**22\. Count Unreachable Pairs**  
+You are given an integer n. There is an **undirected** graph with n nodes, numbered from 0 to n \- 1\. You are given a 2D integer array edges where edges\[i\] \= \[ai, bi\] denotes that there exists an **undirected** edge connecting nodes ai and bi.
+
+Return *the **number of pairs** of different nodes that are **unreachable** from each other*.
+
+The Simple approach is using path compression using disjoint set union data structure.
+
+With Additional Methods in DSU class. 
+```python 
+    def getComps(self):  
+        for i in range(len(self.parent)):  
+            self.find(i)  
+        return list(set(self.parent))  
+    def getSize(self,x):  
+        return self.size[x]  
+```
+Now Using this, I implement the question using the prefix technique of combination counting.
+
+```python
+def countPairs(self, n: int, edges: List[List[int]]) -> int:  
+        dsu=DSU(n)  
+        for u,v in edges:  
+            dsu.union(u,v)  
+        comps=dsu.getComps()
+
+        ans=0  
+        sizes=[]
+
+        for i in comps:  
+            sizes.append(dsu.getSize(i))  
+        total = n  
+        for sz in sizes:  
+            total -= sz  
+            ans += sz * total  
+        return ans 
+``` 
+Now This last loop is using the technique of counting combinations in linear time .
+
+If component sizes are `a₁, a₂, ..., aₖ`, total unreachable pairs:  
+`a₁*(a₂+a₃+...+aₖ) + a₂*(a₃+...+aₖ) + ... + aₖ₋₁*aₖ`
+
+And that’s what the prefix trick computes in O(k) time.
+
+**23\. Longest Increasing Path**   
+Given an m x n integers matrix, return *the length of the longest increasing path in* matrix(4way)
+
+This problem is done using backtracking DFS and using dynamic programming for memoization.  
+The DFS function will return the maximum path length possible satisfying the increasing criteria. 
+
+```python
+        #default memoization of python3  
+        @cache  
+        def dfs(i,j):  
+            #If Cycle in this run then 1  
+            if (i,j) in vis:  
+                return 1  
+            #Mark (i,j) for this run  
+            vis.add((i,j))  
+            noWays=0  
+            for k in range(4):  
+                newI,newJ=i+dirs[k],j+dirs[k+1]  
+                if isvalid(newI,newJ) and matrix[newI][newJ]>matrix[i][j]:  
+                    #if satisfy then explore path length and take max out of 4  
+                    noWays=max(noWays,dfs(newI,newJ))  
+            #Backtrack for next Run  
+            vis.remove((i,j))  
+            #Add currentNode in Way  
+            return noWays+1  
+        ans=0  
+        for i in range(m):  
+            for j in range(n):  
+                vis=set()  
+                ans=max(ans,dfs(i,j))  
+        return ans  
+```
+The time complexity is O(m \* n )  
+
+
+**24\. Parallel Courses III**  
+You are given an integer n, which indicates that there are n courses labeled from 1 to n. You are also given a 2D integer array relations where relations\[j\] \= \[prevCoursej, nextCoursej\] denotes that course prevCoursej has to be completed **before** course nextCoursej (prerequisite relationship). Furthermore, you are given a **0-indexed** integer array time where time\[i\] denotes how many **months** it takes to complete the (i+1)th course.
+
+You must find the **minimum** number of months needed to complete all the courses following these rules:
+
+* You may start taking a course at **any time** if the prerequisites are met.  
+* **Any number of courses** can be taken at the **same time**.
+
+Return *the **minimum** number of months needed to complete all the courses*.
+
+**Note:** The test cases are generated such that it is possible to complete every course (i.e., the graph is a directed acyclic graph).
+
+Now Implementing this using topsort and dynamic programming to maximize the time and give the best answer possible.  
+
+```python
+def minimumTime(self, n: int, relations: List[List[int]], time: List[int]) -> int:  
+        adj = [[] for _ in range(n)]  
+        indegree = [0] * n  
+        for u, v in relations:  
+            adj[u - 1].append(v - 1)  
+            indegree[v - 1] += 1  
+         
+        q = deque()  
+        maxTime = time[:]  
+         
+        for i in range(n):  
+            if indegree[i] == 0:  
+                q.append(i)  
+         
+        while q:  
+            node = q.popleft()  
+            for nxt in adj[node]:  
+                maxTime[nxt] = max(maxTime[nxt], maxTime[node] + time[nxt])  
+                indegree[nxt] -= 1  
+                if indegree[nxt] == 0:  
+                    q.append(nxt)  
+         
+        return max(maxTime)  
+```
+
+**25\. Largest Color Value in DG**  
+There is a **directed graph** of n colored nodes and m edges. The nodes are numbered from 0 to n \- 1\.
+
+You are given a string colors where colors\[i\] is a lowercase English letter representing the **color** of the ith node in this graph (**0-indexed**). You are also given a 2D array edges where edges\[j\] \= \[aj, bj\] indicates that there is a **directed edge** from node aj to node bj.
+
+A valid **path** in the graph is a sequence of nodes x1 \-\> x2 \-\> x3 \-\> ... \-\> xk such that there is a directed edge from xi to xi+1 for every 1 \<= i \< k. The **color value** of the path is the number of nodes that are colored the **most frequently** occurring color along that path.
+
+Return *the **largest color value** of any valid path in the given graph, or* \-1 *if the graph contains a cycle*.
+
+Topological sort to find correct order to store value in 2D DP where there is a map for each color in every node.  
+That is maximum possible values of all the color starting from that node is stored. 
+
+```python
+def largestPathValue(self, colors: str, edges: List[List[int]]) -> int:  
+        n=len(colors)  
+        adj=[[] for _ in range(n)]  
+        indeg=[0 for _ in range(n)]  
+        for u,v in edges:  
+            adj[u].append(v)  
+            indeg[v]+=1  
+        q=deque()  
+        for i in range(n):  
+            if indeg[i]==0:  
+                q.append(i)  
+        seq=[]  
+        while q:  
+            node=q.popleft()  
+            seq.append(node)  
+            for nxt in adj[node]:  
+                indeg[nxt]-=1  
+                if indeg[nxt]==0:  
+                    q.append(nxt)  
+        if len(seq)!=n:  
+            return -1  
+        dp=[defaultdict(int) for _ in range(n)]  
+        for node in reversed(seq):  
+            for nxt in adj[node]:  
+                for col,val in dp[nxt].items():  
+                    dp[node][col]=max(dp[node][col],val)  
+            dp[node][colors[node]]+=1  
+        ans=0  
+        for i in range(n):  
+            for j in dp[i].values():  
+                ans=max(ans,j)  
+        return ans  
+The time complexity is O(nc).
+```
+
+**26\. Longest Cycle in a Graph**  
+You are given a **directed** graph of n nodes numbered from 0 to n \- 1, where each node has **at most one** outgoing edge.
+
+The graph is represented with a given **0-indexed** array edges of size n, indicating that there is a directed edge from node i to node edges\[i\]. If there is no outgoing edge from node i, then edges\[i\] \== \-1.
+
+Return *the length of the **longest** cycle in the graph*. If no cycle exists, return \-1.
+
+A cycle is a path that starts and ends at the **same** node.
+
+DFS using depth\_map that stores depth on each node, to detect cycles. If the  node exists in depth map then there is cycle and difference in current depth and stored depth in depth node is the cycle length.  
+Maximizing it over all unvisited nodes as one node can be part of only one cycle .  
+
+```python
+def longestCycle(self, edges: List[int]) -> int:  
+        n=len(edges) , adj=[[] for _ in range(n)]  
+        for i in range(n):  
+            if edges[i]!=-1:  
+                adj[i].append(edges[i])  
+        vis=set(),ans=-1  
+        def dfs(node,depthmap,depth):  
+            nonlocal ans  
+            if node in depthmap:  
+                ans=max(depth-depthmap[node],ans)  
+                return  
+            if node in vis:  
+                return  
+            vis.add(node)  
+            depthmap[node]=depth  
+            for nxt in adj[node]:  
+                dfs(nxt,depthmap,depth+1)  
+        for i in range(n):  
+            if i not in vis:  
+                dfs(i,{},0)  
+        return ans  
+```
+
+**27\. Shortest Path Visiting all the Nodes**  
+You have an undirected, connected graph of n nodes labeled from 0 to n \- 1\. You are given an array graph where graph\[i\] is a list of all the nodes connected with node i by an edge.
+
+Return *the length of the shortest path that visits every node*. You may start and stop at any node, you may revisit nodes multiple times, and you may reuse edges.
+
+Implementation of bitmask Dynamic Programming.
+
+```python
+def shortestPathLength(self, graph: List[List[int]]) -> int:  
+        n=len(graph)  
+        q = deque()  
+        visited = [[False] * (1 << n) for _ in range(n)]
+
+        for i in range(n):  
+            q.append((i, 1 << i, 0))  # node, visited\_mask, steps  
+            visited[i][1 << i] = True
+
+        while q:  
+            node, mask, steps = q.popleft()  
+            if mask == (1 << n) - 1:  
+                return steps  
+            for nei in graph[node]:  
+                next_mask = mask | (1 << nei)  
+                if not visited[nei][next_mask]:  
+                    visited[nei][next_mask] = True  
+                    q.append((nei, next_mask, steps + 1))
+```
+## **👾 Step 1: What is a Bitmask?**
+
+A **bitmask** is just an **integer** where each **bit represents a state**.
+
+In our case:
+
+* There are `n` nodes (say `n = 4`)
+
+* We will use **4 bits** to represent whether each node is **visited** (`1`) or **not visited** (`0`)
+
+| Node | Visited | Bitmask Position |
+| ----- | ----- | ----- |
+| 0 | ✅ | `...0001` |
+| 1 | ✅ | `...0010` |
+| 2 | ❌ | `...0000` |
+| 3 | ✅ | `...1000` |
+
+So, if nodes 0, 1, and 3 are visited → Bitmask \= `1001` in binary \= `9` in decimal
+
+---
+
+## **💡 Step 2: Important Bit Operations**
+
+### **✅ Set a bit (mark node as visited)**
+
+ 
+`visited_mask = visited_mask | (1 << i)`
+
+| Meaning | Visualization |
+| ----- | ----- |
+| `1 << i` | Shift `1` to i-th bit |
+| \`visited\_mask | (1 \<\< i)\` |
+
+#### **Example:**
+
+Mark node `2` as visited:
+
+  
+`visited_mask = 0001      # currently only node 0 visited`  
+`1 << 2 = 0100            # we want to visit node 2`  
+`Result: 0001 | 0100 = 0101`
+
+---
+
+### **🧪 Try It:**
+
+ 
+`# Mark node 3 as visited`  
+`mask = 0b0011      # visited nodes: 0 and 1`  
+`new_mask = mask | (1 << 3)  # mark node 3`  
+`# new_mask becomes 1011 (nodes 0,1,3 visited)`
+
+---
+
+### **🔍 Check if a bit is set (node is visited)**
+
+ 
+`if (visited_mask & (1 << i)) != 0:`  
+    `# node i is already visited`
+
+| Meaning | Visualization |
+| ----- | ----- |
+| `visited_mask & (1 << i)` | AND to isolate bit `i` |
+| If result is not 0 → set |  |
+
+#### **Example:**
+
+Check if node `2` is visited:
+  
+`visited_mask = 0101`  
+`1 << 2 = 0100`  
+`0101 & 0100 = 0100 ≠ 0 → ✅ visited`
+
+---
+
+### **🎯 Goal Condition: All nodes visited**
+
+
+`if visited_mask == (1 << n) - 1:`  
+    `return steps`
+
+This checks if **all bits are `1`**:
+
+* `(1 << n)` → shift 1 to left `n` times
+
+* Subtract `1` → gets all n bits as `1`
+
+#### **Example:**
+
+ 
+`n = 3`  
+`1 << 3 = 1000 (8)`  
+`8 - 1 = 0111 (7) → all 3 bits set`
+
+So `visited_mask == 7` means all 3 nodes are visited.
+
+---
+
+## **🧠 Putting It All Together in the Algorithm**
+
+### **State:**
+
+Each state in the BFS queue is:
+
+  
+`(node, visited_mask, steps)`
+
+### **Transitions:**
+
+For every neighbor of current node:
+  
+`new_mask = visited_mask | (1 << neighbor)`  
+`# Enqueue (neighbor, new_mask, steps + 1)`
+
+### **Exit Condition:**
+
+ 
+`if visited_mask == (1 << n) - 1:`  
+    `return steps`
+
+| Code | Meaning |
+| ----- | ----- |
+| `visited = [[False] * (1<<n)] * n` | Create state space of `(node, visited_mask)` |
+| `1 << i` | Start with only node `i` visited |
+| `visited[i][1 << i] = True` | Mark that starting state as seen |
+| `q.append((i, 1 << i, 0))` | Start BFS from every node |
+
