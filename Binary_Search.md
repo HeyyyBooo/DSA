@@ -222,8 +222,8 @@ def smallestDivisor(self, nums: List[int], threshold: int) -> int:
    Or also 
 ```python
    def getSum(d):  
-               return sum(ceil(x/d) for x in nums)  
-               ```
+        return sum(ceil(x/d) for x in nums)  
+```
    This also get the same answer.  
      
 8. **Minimum Garden Perimeter to collect NeededApples**  
